@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'last_model',
     ];
 
     /**
@@ -49,4 +50,18 @@ class User extends Authenticatable
             'two_factor_confirmed_at' => 'datetime',
         ];
     }
+
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class);
+    }
+    public function latestConversation()
+    {
+        return $this->hasOne(Conversation::class)->latestOfMany();
+    }
+    public function conversationCount()
+    {
+        return $this->hasMany(Conversation::class)->count();
+    }
+    
 }
