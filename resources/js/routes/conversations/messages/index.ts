@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\MessageController::store
- * @see app/Http/Controllers/MessageController.php:17
+ * @see app/Http/Controllers/MessageController.php:18
  * @route '/conversations/{conversation}/messages'
  */
 export const store = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\MessageController::store
- * @see app/Http/Controllers/MessageController.php:17
+ * @see app/Http/Controllers/MessageController.php:18
  * @route '/conversations/{conversation}/messages'
  */
 store.url = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ store.url = (args: { conversation: number | { id: number } } | [conversation: nu
 
 /**
 * @see \App\Http\Controllers\MessageController::store
- * @see app/Http/Controllers/MessageController.php:17
+ * @see app/Http/Controllers/MessageController.php:18
  * @route '/conversations/{conversation}/messages'
  */
 store.post = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ store.post = (args: { conversation: number | { id: number } } | [conversation: n
 
     /**
 * @see \App\Http\Controllers\MessageController::store
- * @see app/Http/Controllers/MessageController.php:17
+ * @see app/Http/Controllers/MessageController.php:18
  * @route '/conversations/{conversation}/messages'
  */
     const storeForm = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ store.post = (args: { conversation: number | { id: number } } | [conversation: n
 
             /**
 * @see \App\Http\Controllers\MessageController::store
- * @see app/Http/Controllers/MessageController.php:17
+ * @see app/Http/Controllers/MessageController.php:18
  * @route '/conversations/{conversation}/messages'
  */
         storeForm.post = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
