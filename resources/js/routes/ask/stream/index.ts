@@ -1,9 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
-import stream from './stream'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
 /**
-* @see \App\Http\Controllers\AskController::index
- * @see app/Http/Controllers/AskController.php:13
- * @route '/ask'
+* @see \App\Http\Controllers\AskStreamController::index
+ * @see app/Http/Controllers/AskStreamController.php:20
+ * @route '/ask-stream'
  */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
@@ -12,31 +11,31 @@ export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 index.definition = {
     methods: ["get","head"],
-    url: '/ask',
+    url: '/ask-stream',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\AskController::index
- * @see app/Http/Controllers/AskController.php:13
- * @route '/ask'
+* @see \App\Http\Controllers\AskStreamController::index
+ * @see app/Http/Controllers/AskStreamController.php:20
+ * @route '/ask-stream'
  */
 index.url = (options?: RouteQueryOptions) => {
     return index.definition.url + queryParams(options)
 }
 
 /**
-* @see \App\Http\Controllers\AskController::index
- * @see app/Http/Controllers/AskController.php:13
- * @route '/ask'
+* @see \App\Http\Controllers\AskStreamController::index
+ * @see app/Http/Controllers/AskStreamController.php:20
+ * @route '/ask-stream'
  */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
     method: 'get',
 })
 /**
-* @see \App\Http\Controllers\AskController::index
- * @see app/Http/Controllers/AskController.php:13
- * @route '/ask'
+* @see \App\Http\Controllers\AskStreamController::index
+ * @see app/Http/Controllers/AskStreamController.php:20
+ * @route '/ask-stream'
  */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
@@ -44,9 +43,9 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
-* @see \App\Http\Controllers\AskController::index
- * @see app/Http/Controllers/AskController.php:13
- * @route '/ask'
+* @see \App\Http\Controllers\AskStreamController::index
+ * @see app/Http/Controllers/AskStreamController.php:20
+ * @route '/ask-stream'
  */
     const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: index.url(options),
@@ -54,18 +53,18 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
-* @see \App\Http\Controllers\AskController::index
- * @see app/Http/Controllers/AskController.php:13
- * @route '/ask'
+* @see \App\Http\Controllers\AskStreamController::index
+ * @see app/Http/Controllers/AskStreamController.php:20
+ * @route '/ask-stream'
  */
         indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: index.url(options),
             method: 'get',
         })
             /**
-* @see \App\Http\Controllers\AskController::index
- * @see app/Http/Controllers/AskController.php:13
- * @route '/ask'
+* @see \App\Http\Controllers\AskStreamController::index
+ * @see app/Http/Controllers/AskStreamController.php:20
+ * @route '/ask-stream'
  */
         indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: index.url({
@@ -79,9 +78,9 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     index.form = indexForm
 /**
-* @see \App\Http\Controllers\AskController::post
- * @see app/Http/Controllers/AskController.php:21
- * @route '/ask'
+* @see \App\Http\Controllers\AskStreamController::post
+ * @see app/Http/Controllers/AskStreamController.php:27
+ * @route '/ask-stream'
  */
 export const post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: post.url(options),
@@ -90,22 +89,22 @@ export const post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 post.definition = {
     methods: ["post"],
-    url: '/ask',
+    url: '/ask-stream',
 } satisfies RouteDefinition<["post"]>
 
 /**
-* @see \App\Http\Controllers\AskController::post
- * @see app/Http/Controllers/AskController.php:21
- * @route '/ask'
+* @see \App\Http\Controllers\AskStreamController::post
+ * @see app/Http/Controllers/AskStreamController.php:27
+ * @route '/ask-stream'
  */
 post.url = (options?: RouteQueryOptions) => {
     return post.definition.url + queryParams(options)
 }
 
 /**
-* @see \App\Http\Controllers\AskController::post
- * @see app/Http/Controllers/AskController.php:21
- * @route '/ask'
+* @see \App\Http\Controllers\AskStreamController::post
+ * @see app/Http/Controllers/AskStreamController.php:27
+ * @route '/ask-stream'
  */
 post.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: post.url(options),
@@ -113,9 +112,9 @@ post.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
     /**
-* @see \App\Http\Controllers\AskController::post
- * @see app/Http/Controllers/AskController.php:21
- * @route '/ask'
+* @see \App\Http\Controllers\AskStreamController::post
+ * @see app/Http/Controllers/AskStreamController.php:27
+ * @route '/ask-stream'
  */
     const postForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: post.url(options),
@@ -123,9 +122,9 @@ post.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     })
 
             /**
-* @see \App\Http\Controllers\AskController::post
- * @see app/Http/Controllers/AskController.php:21
- * @route '/ask'
+* @see \App\Http\Controllers\AskStreamController::post
+ * @see app/Http/Controllers/AskStreamController.php:27
+ * @route '/ask-stream'
  */
         postForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: post.url(options),
@@ -133,10 +132,9 @@ post.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
         })
     
     post.form = postForm
-const ask = {
+const stream = {
     index: Object.assign(index, index),
 post: Object.assign(post, post),
-stream: Object.assign(stream, stream),
 }
 
-export default ask
+export default stream
