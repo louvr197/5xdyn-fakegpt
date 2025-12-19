@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Conversation;
-use App\Services\SimpleAskService;
+use App\Services\ChatService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Gate;
 
 class ConversationController extends Controller
 {
-    public function __construct(private SimpleAskService $askService) {}
+    public function __construct(private ChatService $askService) {}
 
     /**
      * Display a listing of conversations.
@@ -26,7 +26,8 @@ class ConversationController extends Controller
         return Inertia::render('Chat/Index', [
             'conversations' => $conversations,
             'models' => $this->askService->getModels(),
-            'selectedModel' => auth()->user()->last_model ?? SimpleAskService::DEFAULT_MODEL,
+            'selectedModel' => auth()->user()->last_model ?? ChatService::DEFAULT_MODEL,
+            'failedModels' => \App\Models\FailedModel::pluck('model_id')->toArray(),
         ]);
     }
 
@@ -71,6 +72,7 @@ class ConversationController extends Controller
             'currentConversation' => $conversation,
             'models' => $this->askService->getModels(),
             'selectedModel' => $conversation->model,
+            'failedModels' => \App\Models\FailedModel::pluck('model_id')->toArray(),
         ]);
     }
 
@@ -85,13 +87,29 @@ class ConversationController extends Controller
             'model' => 'required|string',
         ]);
 
+        $oldModel = $conversation->model;
+        $newModel = $request->model;
+
+        // Si le modèle change, ajouter un message système
+        if ($oldModel !== $newModel) {
+            // Obtenir les noms des modèles
+            $models = $this->askService->getModels();
+            $oldModelName = collect($models)->firstWhere('id', $oldModel)['name'] ?? $oldModel;
+            $newModelName = collect($models)->firstWhere('id', $newModel)['name'] ?? $newModel;
+
+            $conversation->messages()->create([
+                'role' => 'system',
+                'content' => "📝 Modèle changé de **{$oldModelName}** vers **{$newModelName}**",
+            ]);
+        }
+
         $conversation->update([
-            'model' => $request->model,
+            'model' => $newModel,
         ]);
 
         // Mettre à jour aussi le modèle par défaut de l'utilisateur
         auth()->user()->update([
-            'last_model' => $request->model,
+            'last_model' => $newModel,
         ]);
 
         return back();
