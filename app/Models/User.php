@@ -23,6 +23,16 @@ class User extends Authenticatable
         'email',
         'password',
         'last_model',
+        'custom_instructions_about',
+        'custom_instructions_behavior',
+        'custom_instructions_commands',
+        'tone_style',
+        'conciseness',
+        'titles_lists',
+        'warmth',
+        'enthusiasm',
+        'formality',
+        'emojis',
     ];
 
     /**
@@ -62,6 +72,11 @@ class User extends Authenticatable
     public function conversationCount()
     {
         return $this->hasMany(Conversation::class)->count();
+    }
+
+    public function instructionPresets()
+    {
+        return $this->hasMany(InstructionPreset::class);
     }
 
 }

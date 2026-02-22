@@ -1,2 +1,8 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /dashboard
+Disallow: /conversations
+Disallow: /custom-instructions
+Disallow: /settings
+
+Sitemap: /sitemap.xml

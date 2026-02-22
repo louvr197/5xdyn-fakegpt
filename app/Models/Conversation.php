@@ -14,6 +14,10 @@ class Conversation extends Model
         'user_id',
         'model',
         'title',
+        'instruction_preset_id',
+        'custom_instructions_about',
+        'custom_instructions_behavior',
+        'custom_instructions_commands',
     ];
 
     public function messages()
@@ -31,5 +35,10 @@ class Conversation extends Model
         return $this->hasOne(Message::class)->latestOfMany();
     }
 
-    
+    public function instructionPreset()
+    {
+        return $this->belongsTo(InstructionPreset::class);
+    }
+
+
 }

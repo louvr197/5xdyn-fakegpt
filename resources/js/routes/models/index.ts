@@ -1,6 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
- * @see routes/web.php:26
+ * @see routes/web.php:41
  * @route '/models/status'
  */
 export const status = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -14,7 +14,7 @@ status.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/web.php:26
+ * @see routes/web.php:41
  * @route '/models/status'
  */
 status.url = (options?: RouteQueryOptions) => {
@@ -22,7 +22,7 @@ status.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/web.php:26
+ * @see routes/web.php:41
  * @route '/models/status'
  */
 status.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -30,7 +30,7 @@ status.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/web.php:26
+ * @see routes/web.php:41
  * @route '/models/status'
  */
 status.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -39,7 +39,7 @@ status.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/web.php:26
+ * @see routes/web.php:41
  * @route '/models/status'
  */
     const statusForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -48,7 +48,7 @@ status.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/web.php:26
+ * @see routes/web.php:41
  * @route '/models/status'
  */
         statusForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -56,7 +56,7 @@ status.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/web.php:26
+ * @see routes/web.php:41
  * @route '/models/status'
  */
         statusForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

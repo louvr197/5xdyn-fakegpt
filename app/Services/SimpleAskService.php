@@ -110,15 +110,45 @@ class SimpleAskService
      */
     private function getSystemPrompt(): array
     {
-        $user = auth()->user()?->name ?? 'l\'utilisateur';
+        $user = auth()->user();
+        $userName = $user?->name ?? 'l\'utilisateur';
         $now = now()->locale('fr')->format('l d F Y H:i');
+
+        $customInstructions = $this->buildCustomInstructions($user);
 
         return [
             'role' => 'system',
             'content' => view('prompts.system', [
                 'now' => $now,
-                'user' => $user,
+                'user' => $userName,
+                'customInstructions' => $customInstructions,
             ])->render(),
         ];
+    }
+
+    /**
+     * Construit les instructions personnalisées.
+     */
+    private function buildCustomInstructions($user): string
+    {
+        if (!$user) {
+            return '';
+        }
+
+        $parts = [];
+
+        if (!empty($user->custom_instructions_about)) {
+            $parts[] = "À propos de l'utilisateur :\n" . $user->custom_instructions_about;
+        }
+
+        if (!empty($user->custom_instructions_behavior)) {
+            $parts[] = "Comportement attendu :\n" . $user->custom_instructions_behavior;
+        }
+
+        if (!empty($user->custom_instructions_commands)) {
+            $parts[] = "Commandes personnalisées :\n" . $user->custom_instructions_commands;
+        }
+
+        return !empty($parts) ? "\n\n" . implode("\n\n", $parts) : '';
     }
 }

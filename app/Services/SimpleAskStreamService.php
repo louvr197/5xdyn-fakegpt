@@ -24,16 +24,40 @@ class SimpleAskStreamService
     /**
      * Récupère la liste légère des modèles.
      */
+    // public function getModels(): array
+    // {
+    //     return cache()->remember('openrouter.models', now()->addHour(), function (): array {
+    //         $response = Http::withToken($this->apiKey)->get("{$this->baseUrl}/models");
+
+    //         return collect($response->json('data', []))
+    //             ->sortBy('name')
+    //             ->map(fn(array $m): array => ['id' => $m['id'], 'name' => $m['name']])
+    //             ->values()
+    //             ->toArray();
+    //     });
+    // }
     public function getModels(): array
     {
         return cache()->remember('openrouter.models', now()->addHour(), function (): array {
             $response = Http::withToken($this->apiKey)->get("{$this->baseUrl}/models");
 
-            return collect($response->json('data', []))
+            // DEBUG
+            if ($response->failed()) {
+                \Log::error('Failed to fetch models', [
+                    'status' => $response->status(),
+                    'body' => $response->body()
+                ]);
+                return []; // Retourne tableau vide si erreur
+            }
+
+            $models = collect($response->json('data', []))
                 ->sortBy('name')
                 ->map(fn(array $m): array => ['id' => $m['id'], 'name' => $m['name']])
                 ->values()
                 ->toArray();
+
+            \Log::info('Models fetched', ['count' => count($models)]);
+            return $models;
         });
     }
 
@@ -49,7 +73,11 @@ class SimpleAskStreamService
         $response = $this->sendStreamRequest($messages, $model, $temperature, $reasoningEffort);
 
         if ($response->failed()) {
-            echo "[ERROR] " . $response->json('error.message', 'HTTP Error');
+            $errorMsg = $response->json('error.message', 'HTTP Error');
+            $errorCode = $response->status();
+            $fullBody = $response->body();
+
+            echo "[ERROR] Code {$errorCode}: {$errorMsg}\n\nFull response: {$fullBody}";
             $this->flush();
             return;
         }
@@ -170,17 +198,50 @@ class SimpleAskStreamService
         }
     }
 
+    /**
+     * Retourne le prompt système.
+     */
     private function getSystemPrompt(): array
     {
-        $user = auth()->user()?->name ?? 'l\'utilisateur';
+        $user = auth()->user();
+        $userName = $user?->name ?? 'l\'utilisateur';
         $now = now()->locale('fr')->format('l d F Y H:i');
+
+        $customInstructions = $this->buildCustomInstructions($user);
 
         return [
             'role' => 'system',
             'content' => view('prompts.system', [
-                'user' => $user,
+                'user' => $userName,
                 'now' => $now,
+                'customInstructions' => $customInstructions,
             ])->render(),
         ];
+    }
+
+    /**
+     * Construit les instructions personnalisées.
+     */
+    private function buildCustomInstructions($user): string
+    {
+        if (!$user) {
+            return '';
+        }
+
+        $parts = [];
+
+        if (!empty($user->custom_instructions_about)) {
+            $parts[] = "À propos de l'utilisateur :\n" . $user->custom_instructions_about;
+        }
+
+        if (!empty($user->custom_instructions_behavior)) {
+            $parts[] = "Comportement attendu :\n" . $user->custom_instructions_behavior;
+        }
+
+        if (!empty($user->custom_instructions_commands)) {
+            $parts[] = "Commandes personnalisées :\n" . $user->custom_instructions_commands;
+        }
+
+        return !empty($parts) ? "\n\n" . implode("\n\n", $parts) : '';
     }
 }

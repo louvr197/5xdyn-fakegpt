@@ -5,6 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description" content="CVBuilder Pro - Votre coach carrière IA. Créez des CV optimisés ATS, préparez vos entretiens et accélérez votre recherche d'emploi avec l'intelligence artificielle.">
+    <meta name="keywords" content="CV, carrière, IA, entretien, lettre motivation, ATS, coach carrière, recherche emploi">
+    <meta name="author" content="CVBuilder Pro">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:site_name" content="CVBuilder Pro">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url()->current() }}">
     {{-- Inline script to detect system dark mode preference and apply it immediately --}}
     <script>
         (function() {

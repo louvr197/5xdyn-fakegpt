@@ -158,7 +158,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     create.form = createForm
 /**
 * @see \App\Http\Controllers\ConversationController::store
- * @see app/Http/Controllers/ConversationController.php:37
+ * @see app/Http/Controllers/ConversationController.php:42
  * @route '/conversations'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -173,7 +173,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\ConversationController::store
- * @see app/Http/Controllers/ConversationController.php:37
+ * @see app/Http/Controllers/ConversationController.php:42
  * @route '/conversations'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -182,7 +182,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ConversationController::store
- * @see app/Http/Controllers/ConversationController.php:37
+ * @see app/Http/Controllers/ConversationController.php:42
  * @route '/conversations'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -192,7 +192,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\ConversationController::store
- * @see app/Http/Controllers/ConversationController.php:37
+ * @see app/Http/Controllers/ConversationController.php:42
  * @route '/conversations'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -202,7 +202,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\ConversationController::store
- * @see app/Http/Controllers/ConversationController.php:37
+ * @see app/Http/Controllers/ConversationController.php:42
  * @route '/conversations'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -213,7 +213,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\ConversationController::show
- * @see app/Http/Controllers/ConversationController.php:57
+ * @see app/Http/Controllers/ConversationController.php:64
  * @route '/conversations/{conversation}'
  */
 export const show = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -228,7 +228,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\ConversationController::show
- * @see app/Http/Controllers/ConversationController.php:57
+ * @see app/Http/Controllers/ConversationController.php:64
  * @route '/conversations/{conversation}'
  */
 show.url = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -261,7 +261,7 @@ show.url = (args: { conversation: number | { id: number } } | [conversation: num
 
 /**
 * @see \App\Http\Controllers\ConversationController::show
- * @see app/Http/Controllers/ConversationController.php:57
+ * @see app/Http/Controllers/ConversationController.php:64
  * @route '/conversations/{conversation}'
  */
 show.get = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -270,7 +270,7 @@ show.get = (args: { conversation: number | { id: number } } | [conversation: num
 })
 /**
 * @see \App\Http\Controllers\ConversationController::show
- * @see app/Http/Controllers/ConversationController.php:57
+ * @see app/Http/Controllers/ConversationController.php:64
  * @route '/conversations/{conversation}'
  */
 show.head = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -280,7 +280,7 @@ show.head = (args: { conversation: number | { id: number } } | [conversation: nu
 
     /**
 * @see \App\Http\Controllers\ConversationController::show
- * @see app/Http/Controllers/ConversationController.php:57
+ * @see app/Http/Controllers/ConversationController.php:64
  * @route '/conversations/{conversation}'
  */
     const showForm = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -290,7 +290,7 @@ show.head = (args: { conversation: number | { id: number } } | [conversation: nu
 
             /**
 * @see \App\Http\Controllers\ConversationController::show
- * @see app/Http/Controllers/ConversationController.php:57
+ * @see app/Http/Controllers/ConversationController.php:64
  * @route '/conversations/{conversation}'
  */
         showForm.get = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -299,7 +299,7 @@ show.head = (args: { conversation: number | { id: number } } | [conversation: nu
         })
             /**
 * @see \App\Http\Controllers\ConversationController::show
- * @see app/Http/Controllers/ConversationController.php:57
+ * @see app/Http/Controllers/ConversationController.php:64
  * @route '/conversations/{conversation}'
  */
         showForm.head = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -412,7 +412,7 @@ edit.head = (args: { conversation: string | number } | [conversation: string | n
     edit.form = editForm
 /**
 * @see \App\Http\Controllers\ConversationController::update
- * @see app/Http/Controllers/ConversationController.php:82
+ * @see app/Http/Controllers/ConversationController.php:99
  * @route '/conversations/{conversation}'
  */
 export const update = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -427,7 +427,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\ConversationController::update
- * @see app/Http/Controllers/ConversationController.php:82
+ * @see app/Http/Controllers/ConversationController.php:99
  * @route '/conversations/{conversation}'
  */
 update.url = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -460,7 +460,7 @@ update.url = (args: { conversation: number | { id: number } } | [conversation: n
 
 /**
 * @see \App\Http\Controllers\ConversationController::update
- * @see app/Http/Controllers/ConversationController.php:82
+ * @see app/Http/Controllers/ConversationController.php:99
  * @route '/conversations/{conversation}'
  */
 update.put = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -469,7 +469,7 @@ update.put = (args: { conversation: number | { id: number } } | [conversation: n
 })
 /**
 * @see \App\Http\Controllers\ConversationController::update
- * @see app/Http/Controllers/ConversationController.php:82
+ * @see app/Http/Controllers/ConversationController.php:99
  * @route '/conversations/{conversation}'
  */
 update.patch = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -479,7 +479,7 @@ update.patch = (args: { conversation: number | { id: number } } | [conversation:
 
     /**
 * @see \App\Http\Controllers\ConversationController::update
- * @see app/Http/Controllers/ConversationController.php:82
+ * @see app/Http/Controllers/ConversationController.php:99
  * @route '/conversations/{conversation}'
  */
     const updateForm = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -494,7 +494,7 @@ update.patch = (args: { conversation: number | { id: number } } | [conversation:
 
             /**
 * @see \App\Http\Controllers\ConversationController::update
- * @see app/Http/Controllers/ConversationController.php:82
+ * @see app/Http/Controllers/ConversationController.php:99
  * @route '/conversations/{conversation}'
  */
         updateForm.put = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -508,7 +508,7 @@ update.patch = (args: { conversation: number | { id: number } } | [conversation:
         })
             /**
 * @see \App\Http\Controllers\ConversationController::update
- * @see app/Http/Controllers/ConversationController.php:82
+ * @see app/Http/Controllers/ConversationController.php:99
  * @route '/conversations/{conversation}'
  */
         updateForm.patch = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -524,7 +524,7 @@ update.patch = (args: { conversation: number | { id: number } } | [conversation:
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\ConversationController::destroy
- * @see app/Http/Controllers/ConversationController.php:121
+ * @see app/Http/Controllers/ConversationController.php:232
  * @route '/conversations/{conversation}'
  */
 export const destroy = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -539,7 +539,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\ConversationController::destroy
- * @see app/Http/Controllers/ConversationController.php:121
+ * @see app/Http/Controllers/ConversationController.php:232
  * @route '/conversations/{conversation}'
  */
 destroy.url = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -572,7 +572,7 @@ destroy.url = (args: { conversation: number | { id: number } } | [conversation: 
 
 /**
 * @see \App\Http\Controllers\ConversationController::destroy
- * @see app/Http/Controllers/ConversationController.php:121
+ * @see app/Http/Controllers/ConversationController.php:232
  * @route '/conversations/{conversation}'
  */
 destroy.delete = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -582,7 +582,7 @@ destroy.delete = (args: { conversation: number | { id: number } } | [conversatio
 
     /**
 * @see \App\Http\Controllers\ConversationController::destroy
- * @see app/Http/Controllers/ConversationController.php:121
+ * @see app/Http/Controllers/ConversationController.php:232
  * @route '/conversations/{conversation}'
  */
     const destroyForm = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -597,7 +597,7 @@ destroy.delete = (args: { conversation: number | { id: number } } | [conversatio
 
             /**
 * @see \App\Http\Controllers\ConversationController::destroy
- * @see app/Http/Controllers/ConversationController.php:121
+ * @see app/Http/Controllers/ConversationController.php:232
  * @route '/conversations/{conversation}'
  */
         destroyForm.delete = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -611,6 +611,263 @@ destroy.delete = (args: { conversation: number | { id: number } } | [conversatio
         })
     
     destroy.form = destroyForm
+/**
+* @see \App\Http\Controllers\ConversationController::updateTitle
+ * @see app/Http/Controllers/ConversationController.php:196
+ * @route '/conversations/{conversation}/title'
+ */
+export const updateTitle = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateTitle.url(args, options),
+    method: 'patch',
+})
+
+updateTitle.definition = {
+    methods: ["patch"],
+    url: '/conversations/{conversation}/title',
+} satisfies RouteDefinition<["patch"]>
+
+/**
+* @see \App\Http\Controllers\ConversationController::updateTitle
+ * @see app/Http/Controllers/ConversationController.php:196
+ * @route '/conversations/{conversation}/title'
+ */
+updateTitle.url = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { conversation: args }
+    }
+
+            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+            args = { conversation: args.id }
+        }
+    
+    if (Array.isArray(args)) {
+        args = {
+                    conversation: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        conversation: typeof args.conversation === 'object'
+                ? args.conversation.id
+                : args.conversation,
+                }
+
+    return updateTitle.definition.url
+            .replace('{conversation}', parsedArgs.conversation.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\ConversationController::updateTitle
+ * @see app/Http/Controllers/ConversationController.php:196
+ * @route '/conversations/{conversation}/title'
+ */
+updateTitle.patch = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateTitle.url(args, options),
+    method: 'patch',
+})
+
+    /**
+* @see \App\Http\Controllers\ConversationController::updateTitle
+ * @see app/Http/Controllers/ConversationController.php:196
+ * @route '/conversations/{conversation}/title'
+ */
+    const updateTitleForm = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: updateTitle.url(args, {
+                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                        _method: 'PATCH',
+                        ...(options?.query ?? options?.mergeQuery ?? {}),
+                    }
+                }),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\ConversationController::updateTitle
+ * @see app/Http/Controllers/ConversationController.php:196
+ * @route '/conversations/{conversation}/title'
+ */
+        updateTitleForm.patch = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: updateTitle.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'PATCH',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'post',
+        })
+    
+    updateTitle.form = updateTitleForm
+/**
+* @see \App\Http\Controllers\ConversationController::updateCustomInstructions
+ * @see app/Http/Controllers/ConversationController.php:214
+ * @route '/conversations/{conversation}/custom-instructions'
+ */
+export const updateCustomInstructions = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateCustomInstructions.url(args, options),
+    method: 'patch',
+})
+
+updateCustomInstructions.definition = {
+    methods: ["patch"],
+    url: '/conversations/{conversation}/custom-instructions',
+} satisfies RouteDefinition<["patch"]>
+
+/**
+* @see \App\Http\Controllers\ConversationController::updateCustomInstructions
+ * @see app/Http/Controllers/ConversationController.php:214
+ * @route '/conversations/{conversation}/custom-instructions'
+ */
+updateCustomInstructions.url = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { conversation: args }
+    }
+
+            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+            args = { conversation: args.id }
+        }
+    
+    if (Array.isArray(args)) {
+        args = {
+                    conversation: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        conversation: typeof args.conversation === 'object'
+                ? args.conversation.id
+                : args.conversation,
+                }
+
+    return updateCustomInstructions.definition.url
+            .replace('{conversation}', parsedArgs.conversation.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\ConversationController::updateCustomInstructions
+ * @see app/Http/Controllers/ConversationController.php:214
+ * @route '/conversations/{conversation}/custom-instructions'
+ */
+updateCustomInstructions.patch = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: updateCustomInstructions.url(args, options),
+    method: 'patch',
+})
+
+    /**
+* @see \App\Http\Controllers\ConversationController::updateCustomInstructions
+ * @see app/Http/Controllers/ConversationController.php:214
+ * @route '/conversations/{conversation}/custom-instructions'
+ */
+    const updateCustomInstructionsForm = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: updateCustomInstructions.url(args, {
+                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                        _method: 'PATCH',
+                        ...(options?.query ?? options?.mergeQuery ?? {}),
+                    }
+                }),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\ConversationController::updateCustomInstructions
+ * @see app/Http/Controllers/ConversationController.php:214
+ * @route '/conversations/{conversation}/custom-instructions'
+ */
+        updateCustomInstructionsForm.patch = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: updateCustomInstructions.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'PATCH',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'post',
+        })
+    
+    updateCustomInstructions.form = updateCustomInstructionsForm
+/**
+* @see \App\Http\Controllers\ConversationController::regenerateTitle
+ * @see app/Http/Controllers/ConversationController.php:138
+ * @route '/conversations/{conversation}/regenerate-title'
+ */
+export const regenerateTitle = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: regenerateTitle.url(args, options),
+    method: 'post',
+})
+
+regenerateTitle.definition = {
+    methods: ["post"],
+    url: '/conversations/{conversation}/regenerate-title',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\ConversationController::regenerateTitle
+ * @see app/Http/Controllers/ConversationController.php:138
+ * @route '/conversations/{conversation}/regenerate-title'
+ */
+regenerateTitle.url = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { conversation: args }
+    }
+
+            if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+            args = { conversation: args.id }
+        }
+    
+    if (Array.isArray(args)) {
+        args = {
+                    conversation: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+                        conversation: typeof args.conversation === 'object'
+                ? args.conversation.id
+                : args.conversation,
+                }
+
+    return regenerateTitle.definition.url
+            .replace('{conversation}', parsedArgs.conversation.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\ConversationController::regenerateTitle
+ * @see app/Http/Controllers/ConversationController.php:138
+ * @route '/conversations/{conversation}/regenerate-title'
+ */
+regenerateTitle.post = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: regenerateTitle.url(args, options),
+    method: 'post',
+})
+
+    /**
+* @see \App\Http\Controllers\ConversationController::regenerateTitle
+ * @see app/Http/Controllers/ConversationController.php:138
+ * @route '/conversations/{conversation}/regenerate-title'
+ */
+    const regenerateTitleForm = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: regenerateTitle.url(args, options),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\ConversationController::regenerateTitle
+ * @see app/Http/Controllers/ConversationController.php:138
+ * @route '/conversations/{conversation}/regenerate-title'
+ */
+        regenerateTitleForm.post = (args: { conversation: number | { id: number } } | [conversation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: regenerateTitle.url(args, options),
+            method: 'post',
+        })
+    
+    regenerateTitle.form = regenerateTitleForm
 const conversations = {
     index: Object.assign(index, index),
 create: Object.assign(create, create),
@@ -619,6 +876,9 @@ show: Object.assign(show, show),
 edit: Object.assign(edit, edit),
 update: Object.assign(update, update),
 destroy: Object.assign(destroy, destroy),
+updateTitle: Object.assign(updateTitle, updateTitle),
+updateCustomInstructions: Object.assign(updateCustomInstructions, updateCustomInstructions),
+regenerateTitle: Object.assign(regenerateTitle, regenerateTitle),
 messages: Object.assign(messages, messages),
 }
 

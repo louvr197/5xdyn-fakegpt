@@ -51,7 +51,9 @@ const submit = () => {
                 <textarea v-model="message" placeholder="Votre message..."></textarea>
 
                 <select v-model="model">
-                    <!-- Boucle sur props.models -->
+                    <option v-for="m in models" :key="m.id" :value="m.id">
+                        {{ m.name }}
+                    </option>
                 </select>
 
                 <input type="range" v-model="temperature" min="0" max="2" step="0.1" />

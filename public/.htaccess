@@ -5,6 +5,14 @@
 
     RewriteEngine On
 
+    # Désactiver le buffering pour le streaming SSE
+    <IfModule mod_deflate.c>
+        SetEnvIfNoCase Request_URI "messages/stream" no-gzip=1
+    </IfModule>
+    <IfModule mod_headers.c>
+        Header set X-Accel-Buffering "no" env=streaming
+    </IfModule>
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

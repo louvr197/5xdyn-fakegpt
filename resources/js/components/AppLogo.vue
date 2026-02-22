@@ -5,12 +5,14 @@ import AppLogoIcon from '@/components/AppLogoIcon.vue';
 <template>
     <div
         class="flex aspect-square size-8 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground"
+        role="img"
+        aria-label="Logo CVBuilder Pro"
     >
-        <AppLogoIcon class="size-5 fill-current text-white dark:text-black" />
+        <AppLogoIcon class="size-5 fill-current text-white dark:text-black" aria-hidden="true" />
     </div>
     <div class="ml-1 grid flex-1 text-left text-sm">
         <span class="mb-0.5 truncate leading-tight font-semibold"
-            >Laravel Starter Kit</span
+            >CVBuilder Pro</span
         >
     </div>
 </template>
