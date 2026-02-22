@@ -25,15 +25,16 @@ defineProps<Props>();
             <SidebarMenu>
                 <SidebarMenuItem v-for="item in items" :key="item.title">
                     <SidebarMenuButton
-                        class="text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100"
+                        class="text-gray-600 hover:text-blue-600 hover:bg-blue-50 dark:text-gray-400 dark:hover:text-blue-400 dark:hover:bg-blue-900/30 rounded-xl transition-all duration-200"
                         as-child
                     >
                         <a
                             :href="toUrl(item.href)"
                             target="_blank"
                             rel="noopener noreferrer"
+                            :aria-label="`${item.title} (ouvre dans un nouvel onglet)`"
                         >
-                            <component :is="item.icon" />
+                            <component :is="item.icon" aria-hidden="true" />
                             <span>{{ item.title }}</span>
                         </a>
                     </SidebarMenuButton>

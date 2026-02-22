@@ -1,0 +1,52 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="200" cy="150" r="120" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="1000" cy="500" r="150" fill="rgba(255,255,255,0.1)"/>
+
+  <!-- Icon/Logo placeholder -->
+  <rect x="100" y="140" width="120" height="120" rx="20" fill="white" opacity="0.95"/>
+  <text x="160" y="220" font-size="60" text-anchor="middle" fill="#3b82f6">💼</text>
+
+  <!-- Main Title -->
+  <text x="260" y="200" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="white">
+    CVBuilder Pro
+  </text>
+
+  <!-- Subtitle -->
+  <text x="100" y="330" font-family="Arial, sans-serif" font-size="42" fill="white" opacity="0.95">
+    Votre Coach Carrière IA
+  </text>
+
+  <!-- Features -->
+  <text x="100" y="420" font-family="Arial, sans-serif" font-size="28" fill="white" opacity="0.9">
+    ✓ CV optimisés ATS
+  </text>
+  <text x="100" y="470" font-family="Arial, sans-serif" font-size="28" fill="white" opacity="0.9">
+    ✓ Préparation entretiens
+  </text>
+  <text x="100" y="520" font-family="Arial, sans-serif" font-size="28" fill="white" opacity="0.9">
+    ✓ Stratégie carrière
+  </text>
+
+  <text x="550" y="420" font-family="Arial, sans-serif" font-size="28" fill="white" opacity="0.9">
+    ✓ Lettres de motivation
+  </text>
+  <text x="550" y="470" font-family="Arial, sans-serif" font-size="28" fill="white" opacity="0.9">
+    ✓ Optimisation LinkedIn
+  </text>
+  <text x="550" y="520" font-family="Arial, sans-serif" font-size="28" fill="white" opacity="0.9">
+    ✓ Disponible 24/7
+  </text>
+</svg>

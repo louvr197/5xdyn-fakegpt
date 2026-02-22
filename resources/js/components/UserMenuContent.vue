@@ -32,8 +32,8 @@ defineProps<Props>();
     <DropdownMenuSeparator />
     <DropdownMenuGroup>
         <DropdownMenuItem :as-child="true">
-            <Link class="block w-full" :href="edit()" prefetch as="button">
-                <Settings class="mr-2 h-4 w-4" />
+            <Link class="block w-full" :href="edit()" prefetch as="button" aria-label="Accéder aux paramètres">
+                <Settings class="mr-2 h-4 w-4" aria-hidden="true" />
                 Settings
             </Link>
         </DropdownMenuItem>
@@ -46,8 +46,9 @@ defineProps<Props>();
             @click="handleLogout"
             as="button"
             data-test="logout-button"
+            aria-label="Se déconnecter"
         >
-            <LogOut class="mr-2 h-4 w-4" />
+            <LogOut class="mr-2 h-4 w-4" aria-hidden="true" />
             Log out
         </Link>
     </DropdownMenuItem>
