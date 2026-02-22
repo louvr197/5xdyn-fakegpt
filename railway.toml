@@ -9,3 +9,5 @@ restartPolicyMaxRetries = 5
 
 [env]
 PHP_VERSION = "8.4"
+NODE_OPTIONS = "--max-old-space-size=1024"
+NPM_CONFIG_LEGACY_PEER_DEPS = "true"
