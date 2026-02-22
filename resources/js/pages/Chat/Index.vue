@@ -1,16 +1,32 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/AppLayout.vue';
-import { store as storeConversation } from '@/routes/conversations';
-import { Link, router, useForm } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { store as storeConversation } from '@/routes/conversations';
+import { router, useForm } from '@inertiajs/vue3';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
+import {
+    Bot,
+    ChevronsDown,
+    ChevronsUp,
+    Download,
+    ImagePlus,
+    Send,
+    User,
+    X,
+} from 'lucide-vue-next';
 import MarkdownIt from 'markdown-it';
-import { computed, onMounted, onUnmounted, ref, watch, nextTick } from 'vue';
-import { ArrowUp, ArrowDown, ChevronsUp, ChevronsDown, User, Bot, Send, ImagePlus, X, Download } from 'lucide-vue-next';
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
 const props = defineProps({
     conversations: Array,
@@ -66,13 +82,19 @@ const openConversationInstructions = () => {
     if (!props.currentConversation) return;
     const preset = props.currentConversation.instruction_preset || null;
     if (preset) {
-        conversationInstructionsForm.custom_instructions_about = preset.about || '';
-        conversationInstructionsForm.custom_instructions_behavior = preset.behavior || '';
-        conversationInstructionsForm.custom_instructions_commands = preset.commands || '';
+        conversationInstructionsForm.custom_instructions_about =
+            preset.about || '';
+        conversationInstructionsForm.custom_instructions_behavior =
+            preset.behavior || '';
+        conversationInstructionsForm.custom_instructions_commands =
+            preset.commands || '';
     } else {
-        conversationInstructionsForm.custom_instructions_about = props.currentConversation.custom_instructions_about || '';
-        conversationInstructionsForm.custom_instructions_behavior = props.currentConversation.custom_instructions_behavior || '';
-        conversationInstructionsForm.custom_instructions_commands = props.currentConversation.custom_instructions_commands || '';
+        conversationInstructionsForm.custom_instructions_about =
+            props.currentConversation.custom_instructions_about || '';
+        conversationInstructionsForm.custom_instructions_behavior =
+            props.currentConversation.custom_instructions_behavior || '';
+        conversationInstructionsForm.custom_instructions_commands =
+            props.currentConversation.custom_instructions_commands || '';
     }
     showConversationInstructions.value = true;
 };
@@ -80,12 +102,15 @@ const openConversationInstructions = () => {
 const saveConversationInstructions = () => {
     if (!props.currentConversation) return;
 
-    conversationInstructionsForm.patch(`/conversations/${props.currentConversation.id}/custom-instructions`, {
-        preserveScroll: true,
-        onSuccess: () => {
-            showConversationInstructions.value = false;
+    conversationInstructionsForm.patch(
+        `/conversations/${props.currentConversation.id}/custom-instructions`,
+        {
+            preserveScroll: true,
+            onSuccess: () => {
+                showConversationInstructions.value = false;
+            },
         },
-    });
+    );
 };
 
 const resetConversationInstructions = () => {
@@ -99,8 +124,10 @@ const applyPresetToConversationInstructions = () => {
 
     const preset = props.currentConversation.instruction_preset;
     conversationInstructionsForm.custom_instructions_about = preset.about || '';
-    conversationInstructionsForm.custom_instructions_behavior = preset.behavior || '';
-    conversationInstructionsForm.custom_instructions_commands = preset.commands || '';
+    conversationInstructionsForm.custom_instructions_behavior =
+        preset.behavior || '';
+    conversationInstructionsForm.custom_instructions_commands =
+        preset.commands || '';
 };
 
 // Édition du titre
@@ -110,7 +137,8 @@ const titleForm = useForm({
 });
 
 const startEditingTitle = () => {
-    titleForm.title = props.currentConversation?.title || 'Nouvelle conversation';
+    titleForm.title =
+        props.currentConversation?.title || 'Nouvelle conversation';
     isEditingTitle.value = true;
     nextTick(() => {
         document.getElementById('title-input')?.focus();
@@ -136,9 +164,13 @@ const cancelEditingTitle = () => {
 const regenerateTitle = () => {
     if (!props.currentConversation) return;
 
-    router.post(`/conversations/${props.currentConversation.id}/regenerate-title`, {}, {
-        preserveScroll: true,
-    });
+    router.post(
+        `/conversations/${props.currentConversation.id}/regenerate-title`,
+        {},
+        {
+            preserveScroll: true,
+        },
+    );
 };
 
 const exportChat = () => {
@@ -149,11 +181,12 @@ const exportChat = () => {
         model: props.currentConversation.model,
         created_at: props.currentConversation.created_at,
         updated_at: props.currentConversation.updated_at,
-        messages: props.currentConversation.messages?.map((msg: any) => ({
-            role: msg.role,
-            content: msg.content,
-            created_at: msg.created_at,
-        })) || [],
+        messages:
+            props.currentConversation.messages?.map((msg: any) => ({
+                role: msg.role,
+                content: msg.content,
+                created_at: msg.created_at,
+            })) || [],
     };
 
     // Créer le JSON
@@ -203,7 +236,7 @@ const processStreamQueue = async () => {
             // Attendre un peu pour l'effet typewriter (ajuster selon le besoin)
             // Plus le délai est court, plus c'est rapide
             if (chunk.length > 1) {
-                await new Promise(resolve => setTimeout(resolve, 5)); // 5ms de délai
+                await new Promise((resolve) => setTimeout(resolve, 5)); // 5ms de délai
             }
         }
     }
@@ -234,11 +267,15 @@ onUnmounted(() => {
 });
 
 // Auto-scroll vers le bas quand les messages changent
-watch(() => props.currentConversation?.messages, () => {
-    nextTick(() => {
-        scrollToBottom();
-    });
-}, { deep: true });
+watch(
+    () => props.currentConversation?.messages,
+    () => {
+        nextTick(() => {
+            scrollToBottom();
+        });
+    },
+    { deep: true },
+);
 
 // Détecter le scroll pour afficher le bouton "remonter"
 const handleScroll = () => {
@@ -250,7 +287,8 @@ const handleScroll = () => {
 // Scroll vers le bas
 const scrollToBottom = () => {
     if (messagesContainer.value) {
-        messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
+        messagesContainer.value.scrollTop =
+            messagesContainer.value.scrollHeight;
     }
 };
 
@@ -263,11 +301,22 @@ const scrollToTop = () => {
 
 // Scroll vers le dernier message
 const scrollToLastMessage = () => {
-    if (props.currentConversation?.messages && props.currentConversation.messages.length > 0) {
-        const lastMessageId = props.currentConversation.messages[props.currentConversation.messages.length - 1].id;
-        const lastMessageElement = document.getElementById(`message-${lastMessageId}`);
+    if (
+        props.currentConversation?.messages &&
+        props.currentConversation.messages.length > 0
+    ) {
+        const lastMessageId =
+            props.currentConversation.messages[
+                props.currentConversation.messages.length - 1
+            ].id;
+        const lastMessageElement = document.getElementById(
+            `message-${lastMessageId}`,
+        );
         if (lastMessageElement) {
-            lastMessageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            lastMessageElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+            });
         }
     }
 };
@@ -302,7 +351,9 @@ const currentModelName = computed(() => {
 // Vérifier si le modèle actuel supporte les images
 const currentModelSupportsImages = computed(() => {
     if (!props.currentConversation || !props.models) return false;
-    const model = props.models.find((m) => m.id === props.currentConversation.model);
+    const model = props.models.find(
+        (m) => m.id === props.currentConversation.model,
+    );
     return model?.supports_image || false;
 });
 
@@ -395,15 +446,20 @@ const sendMessage = async () => {
     console.log('[STREAM] Starting request...');
 
     try {
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-        const response = await fetch(`/conversations/${props.currentConversation.id}/messages/stream`, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': csrfToken || '',
-                'Accept': 'text/event-stream',
+        const csrfToken = document
+            .querySelector('meta[name="csrf-token"]')
+            ?.getAttribute('content');
+        const response = await fetch(
+            `/conversations/${props.currentConversation.id}/messages/stream`,
+            {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken || '',
+                    Accept: 'text/event-stream',
+                },
+                body: formData,
             },
-            body: formData,
-        });
+        );
 
         console.log('[STREAM] Response received, status:', response.status);
 
@@ -457,9 +513,12 @@ const sendMessage = async () => {
                             if (data.done) {
                                 console.log('[STREAM] Received done signal');
                                 // Attendre que la queue soit vide avant de recharger
-                                await new Promise(resolve => {
+                                await new Promise((resolve) => {
                                     const checkQueue = setInterval(() => {
-                                        if (streamQueue.value.length === 0 && !isProcessingQueue.value) {
+                                        if (
+                                            streamQueue.value.length === 0 &&
+                                            !isProcessingQueue.value
+                                        ) {
                                             clearInterval(checkQueue);
                                             resolve(undefined);
                                         }
@@ -467,7 +526,12 @@ const sendMessage = async () => {
                                 });
 
                                 streamingContent.value = '';
-                                router.reload({ only: ['conversations', 'currentConversation'] });
+                                router.reload({
+                                    only: [
+                                        'conversations',
+                                        'currentConversation',
+                                    ],
+                                });
                                 break;
                             }
                         } catch (e) {
@@ -509,70 +573,89 @@ const deleteConversation = (conversationId: number) => {
 
 <template>
     <AppLayout>
-        <div class="flex h-[calc(100vh-4rem)] overflow-visible bg-linear-to-br from-gray-50 via-blue-50/20 to-indigo-50/20 dark:from-gray-950 dark:via-blue-950/20 dark:to-indigo-950/20">
+        <div
+            class="flex h-[calc(100vh-4rem)] overflow-visible bg-linear-to-br from-gray-50 via-blue-50/20 to-indigo-50/20 dark:from-gray-950 dark:via-blue-950/20 dark:to-indigo-950/20"
+        >
             <!-- Sidebar - Liste des conversations -->
             <aside
-                class="w-64 overflow-y-auto border-r border-blue-200/50 bg-white/80 backdrop-blur-xl dark:border-blue-800/30 dark:bg-gray-900/80 shadow-lg"
+                class="w-64 overflow-y-auto border-r border-blue-200/50 bg-blue-50/80 shadow-lg backdrop-blur-xl dark:border-blue-800/30 dark:bg-blue-950/80"
                 aria-label="Liste des conversations"
                 role="complementary"
             >
-                <div class="p-4 space-y-3">
+                <div class="space-y-3 p-4">
                     <!-- Sélection de preset optionnel -->
-                    <div v-if="systemPresets?.length || userPresets?.length" class="space-y-2">
-                        <label id="preset-label" class="text-xs font-medium text-gray-600 dark:text-gray-400">
+                    <div
+                        v-if="systemPresets?.length || userPresets?.length"
+                        class="space-y-2"
+                    >
+                        <label
+                            id="preset-label"
+                            class="text-xs font-medium text-gray-600 dark:text-gray-400"
+                        >
                             Preset (optionnel)
                         </label>
 
-                        <div class="grid gap-1 max-h-44 overflow-y-auto" role="radiogroup" aria-labelledby="preset-label">
+                        <div
+                            class="grid max-h-44 gap-1 overflow-y-auto"
+                            role="radiogroup"
+                            aria-labelledby="preset-label"
+                        >
                             <!-- Option "Aucun" -->
                             <button
                                 @click="clearPreset"
                                 :class="[
                                     'group flex w-full items-center gap-2 overflow-hidden rounded-xl border px-3 py-2 text-left text-xs transition-all duration-200',
                                     !selectedPreset
-                                        ? 'border-gray-300 bg-gray-100/70 text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800/70 dark:text-gray-200'
-                                        : 'border-transparent text-gray-600 hover:border-gray-200 hover:bg-gray-50/70 dark:text-gray-400 dark:hover:border-gray-800/40 dark:hover:bg-gray-800/40'
+                                        ? 'border-blue-300 bg-blue-100/70 text-blue-900 shadow-sm dark:border-blue-700 dark:bg-blue-900/70 dark:text-blue-200'
+                                        : 'border-transparent text-blue-800 hover:border-blue-200 hover:bg-blue-50/70 dark:text-blue-400 dark:hover:border-blue-800/40 dark:hover:bg-blue-900/40',
                                 ]"
                                 role="radio"
                                 :aria-checked="!selectedPreset"
                                 type="button"
                             >
                                 <span
-                                    class="flex h-7 w-7 items-center justify-center rounded-lg bg-white/80 text-base shadow-sm transition-transform duration-200 group-hover:scale-105 dark:bg-gray-900/70"
+                                    class="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-50/80 text-base shadow-sm transition-transform duration-200 group-hover:scale-105 dark:bg-blue-950/70"
                                     aria-hidden="true"
                                 >
                                     ⭕
                                 </span>
-                                <span class="min-w-0 flex-1 truncate whitespace-nowrap font-medium">
+                                <span
+                                    class="min-w-0 flex-1 truncate font-medium whitespace-nowrap"
+                                >
                                     Aucun preset
                                 </span>
                                 <span
                                     class="h-2 w-2 shrink-0 rounded-full border"
                                     :class="
                                         !selectedPreset
-                                            ? 'border-gray-500 bg-gray-500 shadow-sm'
-                                            : 'border-gray-300 dark:border-gray-600'
+                                            ? 'border-blue-500 bg-blue-500 shadow-sm'
+                                            : 'border-blue-300 dark:border-blue-600'
                                     "
                                 ></span>
                             </button>
 
                             <button
-                                v-for="preset in [...(systemPresets || []), ...(userPresets || [])]"
+                                v-for="preset in [
+                                    ...(systemPresets || []),
+                                    ...(userPresets || []),
+                                ]"
                                 :key="preset.id"
                                 @click="selectPreset(preset)"
                                 :class="[
                                     'group flex w-full items-center gap-2 overflow-hidden rounded-xl border px-3 py-2 text-left text-xs transition-all duration-200',
                                     selectedPreset?.id === preset.id
-                                        ? 'border-blue-300 bg-linear-to-r from-blue-500/12 to-indigo-500/12 text-blue-700 shadow-sm dark:border-blue-700 dark:from-blue-500/20 dark:to-indigo-500/20 dark:text-blue-200'
-                                        : 'border-transparent text-gray-700 hover:border-blue-200 hover:bg-blue-50/70 dark:text-gray-300 dark:hover:border-blue-800/40 dark:hover:bg-gray-800/60'
+                                        ? 'border-blue-300 bg-linear-to-r from-blue-500/12 to-blue-600/12 text-blue-900 shadow-sm dark:border-blue-700 dark:from-blue-500/20 dark:to-blue-600/20 dark:text-blue-200'
+                                        : 'border-transparent text-blue-900 hover:border-blue-200 hover:bg-blue-50/70 dark:text-blue-300 dark:hover:border-blue-800/40 dark:hover:bg-blue-900/60',
                                 ]"
                             >
                                 <span
-                                    class="flex h-7 w-7 items-center justify-center rounded-lg bg-white/80 text-base shadow-sm transition-transform duration-200 group-hover:scale-105 dark:bg-gray-900/70"
+                                    class="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-50/80 text-base shadow-sm transition-transform duration-200 group-hover:scale-105 dark:bg-gray-900/70"
                                 >
                                     {{ preset.icon }}
                                 </span>
-                                <span class="min-w-0 flex-1 truncate whitespace-nowrap font-medium">
+                                <span
+                                    class="min-w-0 flex-1 truncate font-medium whitespace-nowrap"
+                                >
                                     {{ preset.name }}
                                 </span>
                                 <span
@@ -589,11 +672,21 @@ const deleteConversation = (conversationId: number) => {
 
                     <button
                         @click="createConversation"
-                        class="w-full rounded-xl bg-linear-to-r from-blue-600 to-blue-700 px-4 py-3 text-white font-medium shadow-lg transition hover:from-blue-700 hover:to-blue-800 hover:shadow-xl hover:scale-[1.02] active:scale-95"
+                        class="w-full rounded-xl bg-linear-to-r from-blue-600 to-blue-700 px-4 py-3 font-medium text-white shadow-lg transition hover:scale-[1.02] hover:from-blue-700 hover:to-blue-800 hover:shadow-xl active:scale-95"
                     >
                         <span class="flex items-center justify-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            <svg
+                                class="h-5 w-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 4v16m8-8H4"
+                                />
                             </svg>
                             Nouvelle conversation
                         </span>
@@ -606,10 +699,10 @@ const deleteConversation = (conversationId: number) => {
                         :key="conversation.id"
                         @click="selectConversation(conversation.id)"
                         :class="[
-                            'group relative mb-2 cursor-pointer rounded-xl p-3 transition-all duration-200 border-2',
+                            'group relative mb-2 cursor-pointer rounded-xl border-2 p-3 transition-all duration-200',
                             currentConversation?.id === conversation.id
-                                ? 'bg-linear-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 border-blue-300 dark:border-blue-700 shadow-md'
-                                : 'bg-white dark:bg-gray-800 border-transparent hover:border-gray-200 dark:hover:border-gray-700 hover:shadow-md',
+                                ? 'border-blue-300 bg-linear-to-r from-blue-50 to-blue-100 shadow-md dark:border-blue-700 dark:from-blue-900/30 dark:to-blue-800/30'
+                                : 'border-transparent bg-blue-50/50 hover:border-blue-200 hover:shadow-md dark:bg-blue-900/30 dark:hover:border-blue-700',
                         ]"
                     >
                         <div class="flex items-start justify-between">
@@ -626,10 +719,14 @@ const deleteConversation = (conversationId: number) => {
                                     <!-- Badge preset dans sidebar -->
                                     <span
                                         v-if="conversation.instruction_preset"
-                                        class="text-base shrink-0"
-                                        :title="conversation.instruction_preset.name"
+                                        class="shrink-0 text-base"
+                                        :title="
+                                            conversation.instruction_preset.name
+                                        "
                                     >
-                                        {{ conversation.instruction_preset.icon }}
+                                        {{
+                                            conversation.instruction_preset.icon
+                                        }}
                                     </span>
                                 </div>
                                 <p
@@ -647,12 +744,14 @@ const deleteConversation = (conversationId: number) => {
                                     deleteConversation(conversation.id)
                                 "
                                 class="text-gray-400 opacity-0 transition group-hover:opacity-100 hover:text-red-600"
+                                aria-label="Supprimer la conversation"
                             >
                                 <svg
                                     class="h-4 w-4"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
+                                    aria-hidden="true"
                                 >
                                     <path
                                         stroke-linecap="round"
@@ -665,18 +764,21 @@ const deleteConversation = (conversationId: number) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </aside>
 
             <!-- Zone principale -->
             <div class="flex flex-1 flex-col overflow-visible">
                 <!-- Header avec sélecteur de modèle -->
                 <div
                     v-if="currentConversation"
-                    class="relative z-20 overflow-visible border-b border-blue-200/50 bg-white/80 backdrop-blur-xl p-5 shadow-lg dark:border-blue-800/30 dark:bg-gray-900/80"
+                    class="relative z-20 overflow-visible border-b border-blue-200/50 bg-blue-50/80 p-5 shadow-lg backdrop-blur-xl dark:border-blue-800/30 dark:bg-blue-950/80"
                 >
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div v-if="!isEditingTitle" class="flex items-center gap-2 group">
+                            <div
+                                v-if="!isEditingTitle"
+                                class="group flex items-center gap-2"
+                            >
                                 <h2
                                     class="text-xl font-bold text-gray-900 dark:text-gray-100"
                                 >
@@ -687,30 +789,57 @@ const deleteConversation = (conversationId: number) => {
                                 </h2>
                                 <button
                                     @click="startEditingTitle"
-                                    class="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+                                    class="rounded-lg p-1.5 text-gray-600 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-blue-100 hover:text-blue-600 dark:text-gray-400 dark:hover:bg-blue-900/30 dark:hover:text-blue-400"
                                     title="Modifier le titre"
+                                    aria-label="Modifier le titre"
                                 >
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                    <svg
+                                        class="h-4 w-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                        />
                                     </svg>
                                 </button>
                                 <button
                                     @click="regenerateTitle"
-                                    class="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/30 text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400"
+                                    class="rounded-lg p-1.5 text-gray-600 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-purple-100 hover:text-purple-600 dark:text-gray-400 dark:hover:bg-purple-900/30 dark:hover:text-purple-400"
                                     title="Régénérer le titre avec l'IA"
+                                    aria-label="Régénérer le titre avec l'IA"
                                 >
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    <svg
+                                        class="h-4 w-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M13 10V3L4 14h7v7l9-11h-7z"
+                                        />
                                     </svg>
                                 </button>
                                 <button
                                     @click="exportChat"
-                                    class="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400"
+                                    class="rounded-lg p-1.5 text-gray-600 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-green-100 hover:text-green-600 dark:text-gray-400 dark:hover:bg-green-900/30 dark:hover:text-green-400"
                                     title="Exporter la conversation"
                                     aria-label="Exporter la conversation"
                                     type="button"
                                 >
-                                    <Download class="w-4 h-4" aria-hidden="true" />
+                                    <Download
+                                        class="h-4 w-4"
+                                        aria-hidden="true"
+                                    />
                                 </button>
                             </div>
                             <div v-else class="flex items-center gap-2">
@@ -718,38 +847,69 @@ const deleteConversation = (conversationId: number) => {
                                     id="title-input"
                                     v-model="titleForm.title"
                                     type="text"
-                                    class="px-3 py-1.5 text-xl font-bold bg-white dark:bg-gray-800 border-2 border-blue-300 dark:border-blue-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-gray-100"
+                                    class="rounded-lg border-2 border-blue-300 bg-blue-50 px-3 py-1.5 text-xl font-bold text-blue-900 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-blue-700 dark:bg-blue-900 dark:text-blue-100"
                                     @keyup.enter="saveTitle"
                                     @keyup.escape="cancelEditingTitle"
                                 />
                                 <button
                                     @click="saveTitle"
                                     :disabled="titleForm.processing"
-                                    class="p-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                                    class="rounded-lg bg-blue-600 p-1.5 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
                                     title="Enregistrer"
+                                    aria-label="Enregistrer le titre"
                                 >
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    <svg
+                                        class="h-4 w-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 13l4 4L19 7"
+                                        />
                                     </svg>
                                 </button>
                                 <button
                                     @click="cancelEditingTitle"
-                                    class="p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400"
+                                    class="rounded-lg p-1.5 text-blue-600 hover:bg-blue-200 dark:text-blue-400 dark:hover:bg-blue-800"
                                     title="Annuler"
+                                    aria-label="Annuler la modification"
                                 >
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    <svg
+                                        class="h-4 w-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"
+                                        />
                                     </svg>
                                 </button>
                             </div>
                             <!-- Badge Preset -->
                             <div
                                 v-if="currentConversation.instruction_preset"
-                                class="flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 border-2 border-blue-300 dark:border-blue-700 shadow-md"
+                                class="flex items-center gap-2 rounded-full border-2 border-blue-300 bg-linear-to-r from-blue-100 to-indigo-100 px-4 py-2 shadow-md dark:border-blue-700 dark:from-blue-900/30 dark:to-indigo-900/30"
                             >
-                                <span class="text-xl">{{ currentConversation.instruction_preset.icon }}</span>
-                                <span class="text-sm font-bold text-blue-800 dark:text-blue-200">
-                                    {{ currentConversation.instruction_preset.name }}
+                                <span class="text-xl">{{
+                                    currentConversation.instruction_preset.icon
+                                }}</span>
+                                <span
+                                    class="text-sm font-bold text-blue-800 dark:text-blue-200"
+                                >
+                                    {{
+                                        currentConversation.instruction_preset
+                                            .name
+                                    }}
                                 </span>
                             </div>
                         </div>
@@ -757,19 +917,36 @@ const deleteConversation = (conversationId: number) => {
                             <button
                                 type="button"
                                 @click="openConversationInstructions"
-                                class="inline-flex items-center gap-2 rounded-xl border-2 border-purple-200/60 bg-white/80 px-3 py-2 text-sm font-semibold text-purple-700 shadow-sm transition-all duration-200 hover:border-purple-400 hover:shadow-md dark:bg-gray-800/80 dark:border-purple-700/60 dark:text-purple-300"
+                                class="inline-flex items-center gap-2 rounded-xl border-2 border-blue-200/60 bg-blue-50/80 px-3 py-2 text-sm font-semibold text-blue-900 shadow-sm transition-all duration-200 hover:border-blue-400 hover:shadow-md dark:border-blue-700/60 dark:bg-blue-950/80 dark:text-blue-300"
                                 title="Instructions pour ce chat"
                             >
-                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11v4m0-8h.01" />
+                                <svg
+                                    class="h-4 w-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 11a7 7 0 11-14 0 7 7 0 0114 0z"
+                                    />
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 11v4m0-8h.01"
+                                    />
                                 </svg>
                                 Chat
                             </button>
                             <div class="relative" ref="modelSelectorRef">
                                 <button
-                                    @click="showModelSelector = !showModelSelector"
-                                    class="flex items-center gap-2 rounded-xl bg-linear-to-r from-white to-gray-50 border-2 border-blue-200/50 px-4 py-2.5 text-sm font-medium text-gray-700 shadow-md transition-all duration-200 hover:border-blue-400 hover:shadow-lg hover:scale-[1.02] dark:from-gray-700 dark:to-gray-750 dark:border-blue-700/50 dark:text-gray-300 dark:hover:border-blue-600"
+                                    @click="
+                                        showModelSelector = !showModelSelector
+                                    "
+                                    class="dark:to-gray-750 flex items-center gap-2 rounded-xl border-2 border-blue-200/50 bg-linear-to-r from-white to-gray-50 px-4 py-2.5 text-sm font-medium text-gray-700 shadow-md transition-all duration-200 hover:scale-[1.02] hover:border-blue-400 hover:shadow-lg dark:border-blue-700/50 dark:from-gray-700 dark:text-gray-300 dark:hover:border-blue-600"
                                 >
                                     <svg
                                         class="h-4 w-4"
@@ -803,19 +980,21 @@ const deleteConversation = (conversationId: number) => {
                                 <!-- Dropdown des modèles -->
                                 <div
                                     v-if="showModelSelector"
-                                    class="absolute right-0 z-50 mt-2 max-h-96 w-80 overflow-y-auto rounded-xl border border-blue-200/50 bg-white/95 backdrop-blur-xl shadow-2xl dark:border-blue-800/30 dark:bg-gray-800/95"
+                                    class="absolute right-0 z-50 mt-2 max-h-96 w-80 overflow-y-auto rounded-xl border border-blue-200/50 bg-blue-50/95 shadow-2xl backdrop-blur-xl dark:border-blue-800/30 dark:bg-gray-800/95"
                                 >
                                     <div
                                         class="border-b border-blue-200/50 p-3 dark:border-blue-800/30"
                                     >
                                         <div
-                                            class="px-3 py-2 text-xs font-bold text-blue-700 uppercase tracking-wide dark:text-blue-300"
+                                            class="px-3 py-2 text-xs font-bold tracking-wide text-blue-700 uppercase dark:text-blue-300"
                                         >
                                             Sélectionner un modèle
                                         </div>
 
                                         <!-- Filtres -->
-                                        <div class="mt-2 flex flex-col space-y-2">
+                                        <div
+                                            class="mt-2 flex flex-col space-y-2"
+                                        >
                                             <label
                                                 class="flex cursor-pointer items-center space-x-2"
                                             >
@@ -845,7 +1024,10 @@ const deleteConversation = (conversationId: number) => {
                                             </label>
 
                                             <label
-                                                v-if="failedModels && failedModels.length > 0"
+                                                v-if="
+                                                    failedModels &&
+                                                    failedModels.length > 0
+                                                "
                                                 class="flex cursor-pointer items-center space-x-2"
                                             >
                                                 <input
@@ -855,13 +1037,19 @@ const deleteConversation = (conversationId: number) => {
                                                 />
                                                 <span
                                                     class="text-sm text-gray-700 dark:text-gray-300"
-                                                    >Masquer modèles en erreur ({{ failedModels.length }})</span
+                                                    >Masquer modèles en erreur
+                                                    ({{
+                                                        failedModels.length
+                                                    }})</span
                                                 >
                                             </label>
                                         </div>
 
                                         <div class="mt-2 text-xs text-gray-500">
-                                            {{ filteredModels.length }} modèle(s)
+                                            {{
+                                                filteredModels.length
+                                            }}
+                                            modèle(s)
                                         </div>
                                     </div>
 
@@ -871,17 +1059,19 @@ const deleteConversation = (conversationId: number) => {
                                             :key="model.id"
                                             @click="changeModel(model.id)"
                                             :class="[
-                                                'group w-full rounded-xl px-3 py-2.5 text-left transition-all duration-200 border-2 mb-1.5',
+                                                'group mb-1.5 w-full rounded-xl border-2 px-3 py-2.5 text-left transition-all duration-200',
                                                 currentConversation.model ===
                                                 model.id
-                                                    ? 'bg-linear-to-r from-blue-50 to-indigo-50 text-blue-700 border-blue-300 dark:from-blue-900/30 dark:to-indigo-900/30 dark:text-blue-300 dark:border-blue-700 shadow-md'
-                                                    : 'text-gray-700 hover:bg-gray-50 border-transparent hover:border-gray-200 dark:text-gray-300 dark:hover:bg-gray-750 dark:hover:border-gray-600',
+                                                    ? 'border-blue-300 bg-linear-to-r from-blue-50 to-indigo-50 text-blue-700 shadow-md dark:border-blue-700 dark:from-blue-900/30 dark:to-indigo-900/30 dark:text-blue-300'
+                                                    : 'dark:hover:bg-gray-750 border-transparent text-gray-700 hover:border-gray-200 hover:bg-gray-50 dark:text-gray-300 dark:hover:border-gray-600',
                                             ]"
                                         >
                                             <div
                                                 class="flex items-center justify-between"
                                             >
-                                                <div class="text-sm font-medium">
+                                                <div
+                                                    class="text-sm font-medium"
+                                                >
                                                     {{ model.name }}
                                                 </div>
                                                 <div
@@ -894,7 +1084,9 @@ const deleteConversation = (conversationId: number) => {
                                                         GRATUIT
                                                     </span>
                                                     <span
-                                                        v-if="model.supports_image"
+                                                        v-if="
+                                                            model.supports_image
+                                                        "
                                                         class="text-xs"
                                                         title="Support images"
                                                     >
@@ -913,7 +1105,8 @@ const deleteConversation = (conversationId: number) => {
                                             v-if="filteredModels.length === 0"
                                             class="py-4 text-center text-sm text-gray-500"
                                         >
-                                            Aucun modèle ne correspond aux filtres
+                                            Aucun modèle ne correspond aux
+                                            filtres
                                         </div>
                                     </div>
                                 </div>
@@ -927,34 +1120,47 @@ const deleteConversation = (conversationId: number) => {
                         <DialogHeader>
                             <DialogTitle>Instructions du chat</DialogTitle>
                             <DialogDescription>
-                                Ces instructions s'appliquent uniquement a cette conversation et ont priorite sur les presets.
+                                Ces instructions s'appliquent uniquement a cette
+                                conversation et ont priorite sur les presets.
                             </DialogDescription>
                         </DialogHeader>
 
                         <div class="space-y-4 py-4">
                             <div class="space-y-2">
-                                <Label for="chat-about">A propos de l'utilisateur</Label>
+                                <Label for="chat-about"
+                                    >A propos de l'utilisateur</Label
+                                >
                                 <Textarea
                                     id="chat-about"
-                                    v-model="conversationInstructionsForm.custom_instructions_about"
+                                    v-model="
+                                        conversationInstructionsForm.custom_instructions_about
+                                    "
                                     placeholder="Contexte personnel ou professionnel..."
                                     rows="3"
                                 />
                             </div>
                             <div class="space-y-2">
-                                <Label for="chat-behavior">Comportement attendu</Label>
+                                <Label for="chat-behavior"
+                                    >Comportement attendu</Label
+                                >
                                 <Textarea
                                     id="chat-behavior"
-                                    v-model="conversationInstructionsForm.custom_instructions_behavior"
+                                    v-model="
+                                        conversationInstructionsForm.custom_instructions_behavior
+                                    "
                                     placeholder="Ton, style, format..."
                                     rows="3"
                                 />
                             </div>
                             <div class="space-y-2">
-                                <Label for="chat-commands">Commandes personnalisees</Label>
+                                <Label for="chat-commands"
+                                    >Commandes personnalisees</Label
+                                >
                                 <Textarea
                                     id="chat-commands"
-                                    v-model="conversationInstructionsForm.custom_instructions_commands"
+                                    v-model="
+                                        conversationInstructionsForm.custom_instructions_commands
+                                    "
                                     placeholder="Commandes ou raccourcis propres a ce chat..."
                                     rows="3"
                                 />
@@ -962,7 +1168,10 @@ const deleteConversation = (conversationId: number) => {
                         </div>
 
                         <DialogFooter>
-                            <Button variant="outline" @click="resetConversationInstructions">
+                            <Button
+                                variant="outline"
+                                @click="resetConversationInstructions"
+                            >
                                 Vider
                             </Button>
                             <Button
@@ -972,10 +1181,18 @@ const deleteConversation = (conversationId: number) => {
                             >
                                 Appliquer le preset
                             </Button>
-                            <Button variant="outline" @click="showConversationInstructions = false">
+                            <Button
+                                variant="outline"
+                                @click="showConversationInstructions = false"
+                            >
                                 Annuler
                             </Button>
-                            <Button @click="saveConversationInstructions" :disabled="conversationInstructionsForm.processing">
+                            <Button
+                                @click="saveConversationInstructions"
+                                :disabled="
+                                    conversationInstructionsForm.processing
+                                "
+                            >
                                 Enregistrer
                             </Button>
                         </DialogFooter>
@@ -986,7 +1203,7 @@ const deleteConversation = (conversationId: number) => {
                 <main
                     ref="messagesContainer"
                     @scroll="handleScroll"
-                    class="flex-1 space-y-4 overflow-y-auto p-6 relative bg-linear-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800"
+                    class="relative flex-1 space-y-4 overflow-y-auto bg-linear-to-b from-gray-50 to-white p-6 dark:from-gray-900 dark:to-gray-800"
                     role="main"
                     aria-label="Messages de conversation"
                 >
@@ -994,9 +1211,11 @@ const deleteConversation = (conversationId: number) => {
                         v-if="!currentConversation"
                         class="flex h-full items-center justify-center"
                     >
-                        <div class="text-center space-y-6 max-w-md px-6">
+                        <div class="max-w-md space-y-6 px-6 text-center">
                             <div class="relative inline-block">
-                                <div class="absolute inset-0 bg-blue-500/20 rounded-full blur-3xl animate-pulse-soft"></div>
+                                <div
+                                    class="animate-pulse-soft absolute inset-0 rounded-full bg-blue-500/20 blur-3xl"
+                                ></div>
                                 <svg
                                     class="relative mx-auto h-24 w-24 text-blue-500/80 dark:text-blue-400/80"
                                     fill="none"
@@ -1013,11 +1232,16 @@ const deleteConversation = (conversationId: number) => {
                                 </svg>
                             </div>
                             <div class="space-y-2">
-                                <p class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                                <p
+                                    class="text-xl font-semibold text-gray-900 dark:text-gray-100"
+                                >
                                     Commencez une conversation
                                 </p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">
-                                    Sélectionnez une conversation existante ou créez-en une nouvelle pour démarrer
+                                <p
+                                    class="text-sm text-gray-600 dark:text-gray-400"
+                                >
+                                    Sélectionnez une conversation existante ou
+                                    créez-en une nouvelle pour démarrer
                                 </p>
                             </div>
                         </div>
@@ -1025,7 +1249,9 @@ const deleteConversation = (conversationId: number) => {
 
                     <div v-else>
                         <!-- Boutons de navigation -->
-                        <div class="fixed bottom-28 right-8 z-10 flex flex-col gap-3">
+                        <div
+                            class="fixed right-8 bottom-28 z-10 flex flex-col gap-3"
+                        >
                             <!-- Début de conversation -->
                             <Transition
                                 enter-active-class="transition ease-out duration-200"
@@ -1038,11 +1264,18 @@ const deleteConversation = (conversationId: number) => {
                                 <button
                                     v-if="showScrollTop"
                                     @click="scrollToTop"
-                                    class="group flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-sm px-4 py-3 text-gray-700 shadow-xl border-2 border-blue-200 hover:bg-linear-to-r hover:from-blue-600 hover:to-blue-700 hover:text-white transition-all hover:scale-105 hover:shadow-2xl dark:bg-gray-800/90 dark:text-gray-200 dark:border-blue-700"
+                                    class="group flex items-center gap-2 rounded-full border-2 border-blue-200 bg-blue-50/90 px-4 py-3 text-gray-700 shadow-xl backdrop-blur-sm transition-all hover:scale-105 hover:bg-linear-to-r hover:from-blue-600 hover:to-blue-700 hover:text-white hover:shadow-2xl dark:border-blue-700 dark:bg-gray-800/90 dark:text-gray-200"
                                     title="Début de conversation"
+                                    aria-label="Aller au début de la conversation"
                                 >
-                                    <ChevronsUp class="w-5 h-5 group-hover:animate-bounce" />
-                                    <span class="text-sm font-medium hidden sm:inline">Début</span>
+                                    <ChevronsUp
+                                        class="h-5 w-5 group-hover:animate-bounce"
+                                        aria-hidden="true"
+                                    />
+                                    <span
+                                        class="hidden text-sm font-medium sm:inline"
+                                        >Début</span
+                                    >
                                 </button>
                             </Transition>
 
@@ -1058,27 +1291,36 @@ const deleteConversation = (conversationId: number) => {
                                 <button
                                     v-if="showScrollTop"
                                     @click="scrollToLastMessage"
-                                    class="group flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-sm px-4 py-3 text-gray-700 shadow-xl border-2 border-green-200 hover:bg-linear-to-r hover:from-green-600 hover:to-emerald-700 hover:text-white transition-all hover:scale-105 hover:shadow-2xl dark:bg-gray-800/90 dark:text-gray-200 dark:border-green-700"
+                                    class="group flex items-center gap-2 rounded-full border-2 border-green-200 bg-blue-50/90 px-4 py-3 text-gray-700 shadow-xl backdrop-blur-sm transition-all hover:scale-105 hover:bg-linear-to-r hover:from-green-600 hover:to-emerald-700 hover:text-white hover:shadow-2xl dark:border-green-700 dark:bg-gray-800/90 dark:text-gray-200"
                                     title="Dernier message"
+                                    aria-label="Aller au dernier message"
                                 >
-                                    <ChevronsDown class="w-5 h-5 group-hover:animate-bounce" />
-                                    <span class="text-sm font-medium hidden sm:inline">Dernier</span>
+                                    <ChevronsDown
+                                        class="h-5 w-5 group-hover:animate-bounce"
+                                        aria-hidden="true"
+                                    />
+                                    <span
+                                        class="hidden text-sm font-medium sm:inline"
+                                        >Dernier</span
+                                    >
                                 </button>
                             </Transition>
                         </div>
 
                         <!-- Messages -->
                         <div
-                            v-for="(message, index) in currentConversation.messages"
+                            v-for="(
+                                message, index
+                            ) in currentConversation.messages"
                             :key="message.id"
                             :id="`message-${message.id}`"
-                            class="scroll-mt-4 animate-in fade-in slide-in-from-bottom-4 duration-500"
+                            class="animate-in scroll-mt-4 duration-500 fade-in slide-in-from-bottom-4"
                         >
                             <!-- Ancre de navigation -->
                             <a
                                 v-if="index > 0"
                                 :href="`#message-${currentConversation.messages[index - 1].id}`"
-                                class="absolute -ml-8 mt-2 text-gray-400 hover:text-blue-600 text-xs opacity-0 hover:opacity-100 transition-opacity"
+                                class="absolute mt-2 -ml-8 text-xs text-gray-400 opacity-0 transition-opacity hover:text-blue-600 hover:opacity-100"
                                 title="Message précédent"
                             >
                                 ↑
@@ -1087,9 +1329,11 @@ const deleteConversation = (conversationId: number) => {
                             <!-- Message système -->
                             <div
                                 v-if="message.role === 'system'"
-                                class="my-6 mx-auto max-w-3xl"
+                                class="mx-auto my-6 max-w-3xl"
                             >
-                                <div class="rounded-xl border border-blue-200 bg-linear-to-r from-blue-50 to-indigo-50 px-6 py-4 shadow-sm dark:border-blue-800 dark:from-blue-950/50 dark:to-indigo-950/50">
+                                <div
+                                    class="rounded-xl border border-blue-200 bg-linear-to-r from-blue-50 to-indigo-50 px-6 py-4 shadow-sm dark:border-blue-800 dark:from-blue-950/50 dark:to-indigo-950/50"
+                                >
                                     <div
                                         class="prose prose-sm max-w-none prose-slate dark:prose-invert"
                                         v-html="md.render(message.content)"
@@ -1101,8 +1345,10 @@ const deleteConversation = (conversationId: number) => {
                             <div
                                 v-else
                                 :class="[
-                                    'flex gap-4 mb-8 group',
-                                    message.role === 'user' ? 'flex-row-reverse' : 'flex-row',
+                                    'group mb-8 flex gap-4',
+                                    message.role === 'user'
+                                        ? 'flex-row-reverse'
+                                        : 'flex-row',
                                 ]"
                             >
                                 <!-- Avatar -->
@@ -1115,16 +1361,26 @@ const deleteConversation = (conversationId: number) => {
                                                 : 'bg-linear-to-br from-purple-500 to-indigo-600 text-white',
                                         ]"
                                     >
-                                        <User v-if="message.role === 'user'" class="h-5 w-5" aria-hidden="true" />
-                                        <Bot v-else class="h-5 w-5" aria-hidden="true" />
+                                        <User
+                                            v-if="message.role === 'user'"
+                                            class="h-5 w-5"
+                                            aria-hidden="true"
+                                        />
+                                        <Bot
+                                            v-else
+                                            class="h-5 w-5"
+                                            aria-hidden="true"
+                                        />
                                     </div>
                                 </div>
 
                                 <!-- Contenu du message -->
                                 <div
                                     :class="[
-                                        'flex-1 max-w-3xl',
-                                        message.role === 'user' ? 'mr-2' : 'ml-2',
+                                        'max-w-3xl flex-1',
+                                        message.role === 'user'
+                                            ? 'mr-2'
+                                            : 'ml-2',
                                     ]"
                                 >
                                     <!-- Message utilisateur -->
@@ -1132,21 +1388,43 @@ const deleteConversation = (conversationId: number) => {
                                         v-if="message.role === 'user'"
                                         class="rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 px-5 py-3 text-white shadow-lg"
                                     >
-                                        <template v-if="typeof message.content === 'string' && message.content.startsWith('[')">
+                                        <template
+                                            v-if="
+                                                typeof message.content ===
+                                                    'string' &&
+                                                message.content.startsWith('[')
+                                            "
+                                        >
                                             <!-- Message multimodal (texte + image) -->
-                                            <template v-for="(part, index) in JSON.parse(message.content)" :key="index">
-                                                <p v-if="part.type === 'text'" class="whitespace-pre-wrap leading-relaxed">
+                                            <template
+                                                v-for="(
+                                                    part, index
+                                                ) in JSON.parse(
+                                                    message.content,
+                                                )"
+                                                :key="index"
+                                            >
+                                                <p
+                                                    v-if="part.type === 'text'"
+                                                    class="leading-relaxed whitespace-pre-wrap"
+                                                >
                                                     {{ part.text }}
                                                 </p>
                                                 <img
-                                                    v-if="part.type === 'image_url'"
+                                                    v-if="
+                                                        part.type ===
+                                                        'image_url'
+                                                    "
                                                     :src="part.image_url.url"
                                                     alt="Image jointe au message"
-                                                    class="max-w-sm rounded-xl mt-3 shadow-lg border-2 border-white/20"
+                                                    class="mt-3 max-w-sm rounded-xl border-2 border-white/20 shadow-lg"
                                                 />
                                             </template>
                                         </template>
-                                        <p v-else class="whitespace-pre-wrap leading-relaxed">
+                                        <p
+                                            v-else
+                                            class="leading-relaxed whitespace-pre-wrap"
+                                        >
                                             {{ message.content }}
                                         </p>
                                     </div>
@@ -1154,7 +1432,7 @@ const deleteConversation = (conversationId: number) => {
                                     <!-- Message assistant -->
                                     <div
                                         v-else
-                                        class="rounded-2xl bg-white dark:bg-gray-800 px-5 py-4 shadow-md border border-gray-100 dark:border-gray-700"
+                                        class="rounded-2xl border border-blue-100 bg-blue-50/80 px-5 py-4 shadow-md dark:border-gray-700 dark:bg-gray-800"
                                     >
                                         <div
                                             class="prose max-w-none prose-slate dark:prose-invert prose-p:leading-relaxed prose-pre:bg-gray-900 prose-pre:shadow-lg"
@@ -1166,25 +1444,36 @@ const deleteConversation = (conversationId: number) => {
                         </div>
 
                         <!-- Message en streaming -->
-                        <div
-                            v-if="isLoadingResponse"
-                            class="flex gap-4 mb-8"
-                        >
+                        <div v-if="isLoadingResponse" class="mb-8 flex gap-4">
                             <!-- Avatar Bot -->
                             <div class="shrink-0">
-                                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-purple-500 to-indigo-600 text-white shadow-md" role="img" aria-label="Assistant IA">
+                                <div
+                                    class="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-purple-500 to-indigo-600 text-white shadow-md"
+                                    role="img"
+                                    aria-label="Assistant IA"
+                                >
                                     <Bot class="h-5 w-5" aria-hidden="true" />
                                 </div>
                             </div>
 
                             <!-- Contenu en streaming ou loader -->
-                            <div class="flex-1 max-w-3xl ml-2">
-                                <div class="rounded-2xl bg-white dark:bg-gray-800 px-5 py-4 shadow-md border border-gray-100 dark:border-gray-700">
-                                    <div v-if="streamingContent" class="prose max-w-none prose-slate dark:prose-invert prose-p:leading-relaxed prose-pre:bg-gray-900 prose-pre:shadow-lg">
+                            <div class="ml-2 max-w-3xl flex-1">
+                                <div
+                                    class="rounded-2xl border border-gray-100 bg-white px-5 py-4 shadow-md dark:border-gray-700 dark:bg-gray-800"
+                                >
+                                    <div
+                                        v-if="streamingContent"
+                                        class="prose max-w-none prose-slate dark:prose-invert prose-p:leading-relaxed prose-pre:bg-gray-900 prose-pre:shadow-lg"
+                                    >
                                         <div v-html="streamingMarkdown"></div>
-                                        <span class="inline-block w-2 h-5 bg-purple-500 animate-pulse ml-0.5"></span>
+                                        <span
+                                            class="ml-0.5 inline-block h-5 w-2 animate-pulse bg-purple-500"
+                                        ></span>
                                     </div>
-                                    <div v-else class="flex items-center space-x-2">
+                                    <div
+                                        v-else
+                                        class="flex items-center space-x-2"
+                                    >
                                         <div
                                             class="h-2.5 w-2.5 animate-bounce rounded-full bg-linear-to-r from-purple-500 to-indigo-500"
                                             style="animation-delay: 0s"
@@ -1202,7 +1491,8 @@ const deleteConversation = (conversationId: number) => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </main>
+
                 <!-- Zone de saisie -->
                 <div
                     v-if="currentConversation"
@@ -1214,8 +1504,16 @@ const deleteConversation = (conversationId: number) => {
                         class="mb-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800 shadow-sm dark:border-red-800 dark:bg-red-900/20 dark:text-red-400"
                     >
                         <div class="flex items-start gap-3">
-                            <svg class="h-5 w-5 mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                            <svg
+                                class="mr-2 h-5 w-5 shrink-0"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                    clip-rule="evenodd"
+                                />
                             </svg>
                             <span>{{ error }}</span>
                         </div>
@@ -1234,7 +1532,7 @@ const deleteConversation = (conversationId: number) => {
                         <button
                             @click="removeImage"
                             type="button"
-                            class="absolute -top-3 -right-3 flex h-8 w-8 items-center justify-center rounded-full bg-red-500 text-white shadow-lg transition hover:bg-red-600 hover:scale-110"
+                            class="absolute -top-3 -right-3 flex h-8 w-8 items-center justify-center rounded-full bg-red-500 text-white shadow-lg transition hover:scale-110 hover:bg-red-600"
                             aria-label="Supprimer l'image"
                         >
                             <X class="h-4 w-4" aria-hidden="true" />
@@ -1250,7 +1548,7 @@ const deleteConversation = (conversationId: number) => {
                             v-if="currentModelSupportsImages"
                             type="button"
                             @click="() => $refs.fileInput?.click()"
-                            class="shrink-0 flex items-center justify-center h-12 w-12 rounded-xl bg-white border-2 border-gray-200 text-gray-600 transition hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:border-blue-500 shadow-sm"
+                            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-2 border-blue-200 bg-blue-50 text-gray-600 shadow-sm transition hover:border-blue-400 hover:bg-blue-100 hover:text-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:border-blue-500 dark:hover:bg-gray-600"
                             aria-label="Joindre une image"
                         >
                             <ImagePlus class="h-5 w-5" aria-hidden="true" />
@@ -1264,8 +1562,10 @@ const deleteConversation = (conversationId: number) => {
                             />
                         </button>
 
-                        <div class="flex-1 relative">
-                            <label for="message-input" class="sr-only">Message</label>
+                        <div class="relative flex-1">
+                            <label for="message-input" class="sr-only"
+                                >Message</label
+                            >
                             <textarea
                                 id="message-input"
                                 ref="messageInputRef"
@@ -1273,22 +1573,38 @@ const deleteConversation = (conversationId: number) => {
                                 @keydown.enter.exact.prevent="sendMessage"
                                 placeholder="Écrivez votre message... (Entrée pour envoyer)"
                                 rows="1"
-                                class="w-full resize-none rounded-2xl border-2 border-gray-200 bg-white px-5 py-3 text-gray-900 placeholder-gray-400 shadow-sm transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:focus:border-blue-500 dark:focus:ring-blue-900/50"
+                                class="w-full resize-none rounded-2xl border-2 border-blue-200 bg-blue-50 px-5 py-3 text-gray-900 placeholder-gray-400 shadow-sm transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:focus:border-blue-500 dark:focus:ring-blue-900/50"
                                 :disabled="isLoadingResponse"
-                                :aria-label="isLoadingResponse ? 'En attente de réponse' : 'Écrire un message'"
-                                style="min-height: 3rem; max-height: 12rem;"
-                                @input="(e) => {
-                                    e.target.style.height = 'auto';
-                                    e.target.style.height = Math.min(e.target.scrollHeight, 192) + 'px';
-                                }"
+                                :aria-label="
+                                    isLoadingResponse
+                                        ? 'En attente de réponse'
+                                        : 'Écrire un message'
+                                "
+                                style="min-height: 3rem; max-height: 12rem"
+                                @input="
+                                    (e) => {
+                                        e.target.style.height = 'auto';
+                                        e.target.style.height =
+                                            Math.min(
+                                                e.target.scrollHeight,
+                                                192,
+                                            ) + 'px';
+                                    }
+                                "
                             ></textarea>
                         </div>
 
                         <button
                             type="submit"
-                            :disabled="!messageForm.content.trim() || isLoadingResponse"
-                            class="shrink-0 flex items-center justify-center h-12 w-12 rounded-xl bg-linear-to-r from-blue-600 to-blue-700 text-white shadow-lg transition hover:from-blue-700 hover:to-blue-800 hover:shadow-xl hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
-                            :aria-label="isLoadingResponse ? 'Envoi en cours' : 'Envoyer le message'"
+                            :disabled="
+                                !messageForm.content.trim() || isLoadingResponse
+                            "
+                            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-linear-to-r from-blue-600 to-blue-700 text-white shadow-lg transition hover:scale-105 hover:from-blue-700 hover:to-blue-800 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+                            :aria-label="
+                                isLoadingResponse
+                                    ? 'Envoi en cours'
+                                    : 'Envoyer le message'
+                            "
                         >
                             <Send class="h-5 w-5" aria-hidden="true" />
                         </button>

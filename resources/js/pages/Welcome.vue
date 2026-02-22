@@ -143,8 +143,8 @@ const createConversationWithPreset = (presetName: string | null) => {
                 </div>
 
                 <div class="flex max-w-4xl flex-col items-center gap-6 text-center">
-                    <div class="inline-flex items-center rounded-full border-2 border-blue-200 bg-white/80 backdrop-blur-sm px-5 py-2 text-sm font-medium shadow-lg transition-all hover:shadow-xl hover:scale-105 dark:bg-gray-800/80 dark:border-blue-800">
-                        <Target class="mr-2 h-4 w-4 text-blue-600" />
+                    <div class="inline-flex items-center rounded-full border-2 border-blue-200 bg-blue-50/80 backdrop-blur-sm px-5 py-2 text-sm font-medium shadow-lg transition-all hover:shadow-xl hover:scale-105 dark:bg-gray-800/80 dark:border-blue-800">
+                        <Target class="mr-2 h-4 w-4 text-blue-600" aria-hidden="true" />
                         <span class="text-blue-700 dark:text-blue-400">Expert en recrutement propulsé par IA</span>
                     </div>
                     <h1 class="text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
@@ -160,7 +160,7 @@ const createConversationWithPreset = (presetName: string | null) => {
                             :href="dashboard()"
                             class="group inline-flex items-center justify-center rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 px-10 py-4 text-lg font-semibold text-white shadow-2xl transition-all hover:shadow-3xl hover:scale-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
                         >
-                            <Briefcase class="mr-3 h-6 w-6 group-hover:animate-bounce" />
+                            <Briefcase class="mr-3 h-6 w-6 group-hover:animate-bounce" aria-hidden="true" />
                             Optimiser mon CV
                         </Link>
                         <Link
@@ -168,13 +168,13 @@ const createConversationWithPreset = (presetName: string | null) => {
                             :href="register()"
                             class="group inline-flex items-center justify-center rounded-2xl bg-linear-to-r from-blue-600 to-indigo-600 px-10 py-4 text-lg font-semibold text-white shadow-2xl transition-all hover:shadow-3xl hover:scale-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
                         >
-                            <Briefcase class="mr-3 h-6 w-6 group-hover:animate-bounce" />
+                            <Briefcase class="mr-3 h-6 w-6 group-hover:animate-bounce" aria-hidden="true" />
                             Créer mon CV gratuitement
                         </Link>
                         <Link
                             v-if="!$page.props.auth.user"
                             :href="login()"
-                            class="inline-flex items-center justify-center rounded-2xl border-2 border-gray-300 bg-white/80 backdrop-blur-sm px-10 py-4 text-lg font-medium shadow-lg transition-all hover:bg-gray-50 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gray-300 dark:bg-gray-800/80 dark:border-gray-700"
+                            class="inline-flex items-center justify-center rounded-2xl border-2 border-blue-300 bg-blue-50/80 backdrop-blur-sm px-10 py-4 text-lg font-medium shadow-lg transition-all hover:bg-blue-100 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300 dark:bg-blue-950/80 dark:border-blue-700"
                         >
                             Se connecter
                         </Link>
@@ -197,21 +197,22 @@ const createConversationWithPreset = (presetName: string | null) => {
                         :is="$page.props.auth.user ? 'button' : 'div'"
                         @click="$page.props.auth.user ? createConversationWithPreset(feature.presetName) : null"
                         :class="[
-                            'group flex flex-col gap-5 rounded-2xl border-2 border-gray-200 bg-white/80 backdrop-blur-sm p-8 shadow-lg transition-all hover:shadow-2xl hover:scale-105 dark:bg-gray-800/80 dark:border-gray-700',
+                            'group flex flex-col gap-5 rounded-2xl border-2 border-blue-200 bg-blue-50/80 backdrop-blur-sm p-8 shadow-lg transition-all hover:shadow-2xl hover:scale-105 dark:bg-blue-950/80 dark:border-blue-700',
                             feature.borderColor,
                             $page.props.auth.user && feature.presetName ? 'cursor-pointer text-left' : ''
                         ]"
+                        :aria-label="$page.props.auth.user && feature.presetName ? `Créer une conversation pour ${feature.title}` : undefined"
                     >
-                        <div :class="['flex h-14 w-14 items-center justify-center rounded-xl bg-linear-to-br shadow-lg group-hover:scale-110 transition-transform', feature.gradient]">
-                            <component :is="feature.icon" class="h-7 w-7 text-white" />
+                        <div :class="['flex h-14 w-14 items-center justify-center rounded-xl bg-linear-to-br shadow-lg group-hover:scale-110 transition-transform', feature.gradient]" role="img" :aria-label="`Icône ${feature.title}`">
+                            <component :is="feature.icon" class="h-7 w-7 text-white" aria-hidden="true" />
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ feature.title }}</h3>
                         <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
                             {{ feature.description }}
                         </p>
-                        <div v-if="$page.props.auth.user && feature.presetName" class="mt-auto pt-4 flex items-center text-sm font-medium text-blue-600 dark:text-blue-400">
+                        <div v-if="$page.props.auth.user && feature.presetName" class="mt-auto pt-4 flex items-center text-sm font-medium text-blue-900 dark:text-blue-400">
                             <span>Créer une conversation</span>
-                            <svg class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                             </svg>
                         </div>
@@ -228,34 +229,34 @@ const createConversationWithPreset = (presetName: string | null) => {
                     </p>
                 </div>
                 <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    <div class="rounded-2xl border-2 border-gray-200 bg-white/80 backdrop-blur-sm p-8 shadow-lg dark:bg-gray-800/80 dark:border-gray-700">
+                    <div class="rounded-2xl border-2 border-blue-200 bg-blue-50/80 backdrop-blur-sm p-8 shadow-lg dark:bg-blue-950/80 dark:border-blue-700">
                         <div class="flex items-center justify-between">
                             <h3 class="text-xl font-bold">Starter</h3>
-                            <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">Gratuit</span>
+                            <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-900 dark:bg-blue-900/40 dark:text-blue-300">Gratuit</span>
                         </div>
-                        <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">Ideal pour debuter et tester vos premiers CV.</p>
-                        <div class="mt-6 text-4xl font-bold">0€<span class="text-base font-medium text-gray-500">/mois</span></div>
-                        <ul class="mt-6 space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                        <p class="mt-3 text-sm text-gray-700 dark:text-gray-400">Ideal pour debuter et tester vos premiers CV.</p>
+                        <div class="mt-6 text-4xl font-bold">0€<span class="text-base font-medium text-gray-600">/mois</span></div>
+                        <ul class="mt-6 space-y-3 text-sm text-gray-700 dark:text-gray-400">
                             <li>3 conversations par semaine</li>
                             <li>Optimisation ATS de base</li>
                             <li>Templates CV essentiels</li>
                         </ul>
                         <Link
                             :href="register()"
-                            class="mt-8 inline-flex w-full items-center justify-center rounded-xl border-2 border-blue-200/60 bg-white/80 px-4 py-2.5 text-sm font-semibold text-blue-700 shadow-sm transition hover:border-blue-400 hover:shadow-md dark:bg-gray-800/80 dark:border-blue-700/60 dark:text-blue-300"
+                            class="mt-8 inline-flex w-full items-center justify-center rounded-xl border-2 border-blue-200/60 bg-blue-50/80 px-4 py-2.5 text-sm font-semibold text-blue-900 shadow-sm transition hover:border-blue-400 hover:shadow-md dark:bg-blue-950/80 dark:border-blue-700/60 dark:text-blue-300"
                         >
                             Commencer
                         </Link>
                     </div>
 
-                    <div class="rounded-2xl border-2 border-blue-300 bg-linear-to-br from-blue-600/10 via-white/80 to-indigo-600/10 p-8 shadow-xl dark:border-blue-700 dark:from-blue-900/30 dark:via-gray-900/70 dark:to-indigo-900/30">
+                    <div class="rounded-2xl border-2 border-blue-300 bg-linear-to-br from-blue-600/10 via-blue-50/80 to-blue-600/10 p-8 shadow-xl dark:border-blue-700 dark:from-blue-900/30 dark:via-blue-950/70 dark:to-blue-900/30">
                         <div class="flex items-center justify-between">
                             <h3 class="text-xl font-bold">Pro</h3>
                             <span class="rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white">Populaire</span>
                         </div>
-                        <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">Pour les chercheurs d'emploi actifs et ambitieux.</p>
-                        <div class="mt-6 text-4xl font-bold">19€<span class="text-base font-medium text-gray-500">/mois</span></div>
-                        <ul class="mt-6 space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                        <p class="mt-3 text-sm text-gray-700 dark:text-gray-400">Pour les chercheurs d'emploi actifs et ambitieux.</p>
+                        <div class="mt-6 text-4xl font-bold">19€<span class="text-base font-medium text-gray-600">/mois</span></div>
+                        <ul class="mt-6 space-y-3 text-sm text-gray-700 dark:text-gray-400">
                             <li>Conversations illimitees</li>
                             <li>Coaching entretien avance</li>
                             <li>Audit LinkedIn + lettres</li>
@@ -268,21 +269,21 @@ const createConversationWithPreset = (presetName: string | null) => {
                         </Link>
                     </div>
 
-                    <div class="rounded-2xl border-2 border-gray-200 bg-white/80 backdrop-blur-sm p-8 shadow-lg dark:bg-gray-800/80 dark:border-gray-700">
+                    <div class="rounded-2xl border-2 border-blue-200 bg-blue-50/80 backdrop-blur-sm p-8 shadow-lg dark:bg-blue-950/80 dark:border-blue-700">
                         <div class="flex items-center justify-between">
                             <h3 class="text-xl font-bold">Equipe</h3>
                             <span class="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300">Sur devis</span>
                         </div>
-                        <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">Pour les cabinets de recrutement et RH.</p>
-                        <div class="mt-6 text-4xl font-bold">99€<span class="text-base font-medium text-gray-500">/mois</span></div>
-                        <ul class="mt-6 space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                        <p class="mt-3 text-sm text-gray-700 dark:text-gray-400">Pour les cabinets de recrutement et RH.</p>
+                        <div class="mt-6 text-4xl font-bold">99€<span class="text-base font-medium text-gray-600">/mois</span></div>
+                        <ul class="mt-6 space-y-3 text-sm text-gray-700 dark:text-gray-400">
                             <li>Espaces equipes multi-utilisateurs</li>
                             <li>Reporting et analytics</li>
                             <li>Support prioritaire</li>
                         </ul>
                         <a
                             href="/contact"
-                            class="mt-8 inline-flex w-full items-center justify-center rounded-xl border-2 border-indigo-200/60 bg-white/80 px-4 py-2.5 text-sm font-semibold text-indigo-700 shadow-sm transition hover:border-indigo-400 hover:shadow-md dark:bg-gray-800/80 dark:border-indigo-700/60 dark:text-indigo-300"
+                            class="mt-8 inline-flex w-full items-center justify-center rounded-xl border-2 border-blue-200/60 bg-blue-50/80 px-4 py-2.5 text-sm font-semibold text-blue-900 shadow-sm transition hover:border-blue-400 hover:shadow-md dark:bg-blue-950/80 dark:border-blue-700/60 dark:text-blue-300"
                         >
                             Contacter l'equipe
                         </a>
@@ -299,33 +300,33 @@ const createConversationWithPreset = (presetName: string | null) => {
                     </p>
                 </div>
                 <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    <div class="rounded-2xl border-2 border-gray-200 bg-white/80 backdrop-blur-sm p-6 shadow-lg dark:bg-gray-800/80 dark:border-gray-700">
-                        <p class="text-sm text-gray-600 dark:text-gray-400">"CVBuilder Pro m'a aide a clarifier mon pitch. J'ai signe en 3 semaines."</p>
+                    <div class="rounded-2xl border-2 border-blue-200 bg-blue-50/80 backdrop-blur-sm p-6 shadow-lg dark:bg-blue-950/80 dark:border-blue-700">
+                        <p class="text-sm text-gray-700 dark:text-gray-400">"CVBuilder Pro m'a aide a clarifier mon pitch. J'ai signe en 3 semaines."</p>
                         <div class="mt-6 flex items-center gap-3">
-                            <div class="h-10 w-10 rounded-full bg-linear-to-br from-blue-500 to-indigo-600"></div>
+                            <div class="h-10 w-10 rounded-full bg-linear-to-br from-blue-500 to-indigo-600" role="presentation"></div>
                             <div>
                                 <p class="text-sm font-semibold">Lea M.</p>
-                                <p class="text-xs text-gray-500">Product Designer</p>
+                                <p class="text-xs text-gray-600">Product Designer</p>
                             </div>
                         </div>
                     </div>
-                    <div class="rounded-2xl border-2 border-gray-200 bg-white/80 backdrop-blur-sm p-6 shadow-lg dark:bg-gray-800/80 dark:border-gray-700">
-                        <p class="text-sm text-gray-600 dark:text-gray-400">"Le coaching entretien est ultra precis. J'ai gagne en confiance."</p>
+                    <div class="rounded-2xl border-2 border-blue-200 bg-blue-50/80 backdrop-blur-sm p-6 shadow-lg dark:bg-blue-950/80 dark:border-blue-700">
+                        <p class="text-sm text-gray-700 dark:text-gray-400">"Le coaching entretien est ultra precis. J'ai gagne en confiance."</p>
                         <div class="mt-6 flex items-center gap-3">
-                            <div class="h-10 w-10 rounded-full bg-linear-to-br from-purple-500 to-pink-500"></div>
+                            <div class="h-10 w-10 rounded-full bg-linear-to-br from-purple-500 to-pink-500" role="presentation"></div>
                             <div>
                                 <p class="text-sm font-semibold">Nadir K.</p>
-                                <p class="text-xs text-gray-500">Data Analyst</p>
+                                <p class="text-xs text-gray-600">Data Analyst</p>
                             </div>
                         </div>
                     </div>
-                    <div class="rounded-2xl border-2 border-gray-200 bg-white/80 backdrop-blur-sm p-6 shadow-lg dark:bg-gray-800/80 dark:border-gray-700">
-                        <p class="text-sm text-gray-600 dark:text-gray-400">"J'ai restructure mon LinkedIn et recu 2 offres en une semaine."</p>
+                    <div class="rounded-2xl border-2 border-blue-200 bg-blue-50/80 backdrop-blur-sm p-6 shadow-lg dark:bg-blue-950/80 dark:border-blue-700">
+                        <p class="text-sm text-gray-700 dark:text-gray-400">"J'ai restructure mon LinkedIn et recu 2 offres en une semaine."</p>
                         <div class="mt-6 flex items-center gap-3">
-                            <div class="h-10 w-10 rounded-full bg-linear-to-br from-emerald-500 to-teal-500"></div>
+                            <div class="h-10 w-10 rounded-full bg-linear-to-br from-emerald-500 to-teal-500" role="presentation"></div>
                             <div>
                                 <p class="text-sm font-semibold">Camille R.</p>
-                                <p class="text-xs text-gray-500">Marketing Manager</p>
+                                <p class="text-xs text-gray-600">Marketing Manager</p>
                             </div>
                         </div>
                     </div>
@@ -341,23 +342,23 @@ const createConversationWithPreset = (presetName: string | null) => {
                     </p>
                 </div>
                 <div class="mx-auto max-w-3xl space-y-4">
-                    <details class="group rounded-2xl border-2 border-gray-200 bg-white/80 p-6 shadow-md transition dark:bg-gray-800/80 dark:border-gray-700">
+                    <details class="group rounded-2xl border-2 border-blue-200 bg-blue-50/80 p-6 shadow-md transition dark:bg-gray-800/80 dark:border-gray-700">
                         <summary class="cursor-pointer text-base font-semibold text-gray-900 dark:text-white">Comment les conversations sont-elles utilisees ?</summary>
                         <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">Elles servent uniquement a produire vos reponses. Vous gardez la main sur vos donnees.</p>
                     </details>
-                    <details class="group rounded-2xl border-2 border-gray-200 bg-white/80 p-6 shadow-md transition dark:bg-gray-800/80 dark:border-gray-700">
+                    <details class="group rounded-2xl border-2 border-blue-200 bg-blue-50/80 p-6 shadow-md transition dark:bg-gray-800/80 dark:border-gray-700">
                         <summary class="cursor-pointer text-base font-semibold text-gray-900 dark:text-white">Puis-je changer de modele a tout moment ?</summary>
                         <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">Oui, vous pouvez basculer entre plusieurs LLM selon votre besoin.</p>
                     </details>
-                    <details class="group rounded-2xl border-2 border-gray-200 bg-white/80 p-6 shadow-md transition dark:bg-gray-800/80 dark:border-gray-700">
+                    <details class="group rounded-2xl border-2 border-blue-200 bg-blue-50/80 p-6 shadow-md transition dark:bg-gray-800/80 dark:border-gray-700">
                         <summary class="cursor-pointer text-base font-semibold text-gray-900 dark:text-white">Les conseils remplacent-ils un recruteur ?</summary>
                         <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">Non. L'IA est un outil d'aide a la decision. Vous restez responsable.</p>
                     </details>
-                    <details class="group rounded-2xl border-2 border-gray-200 bg-white/80 p-6 shadow-md transition dark:bg-gray-800/80 dark:border-gray-700">
+                    <details class="group rounded-2xl border-2 border-blue-200 bg-blue-50/80 p-6 shadow-md transition dark:bg-gray-800/80 dark:border-gray-700">
                         <summary class="cursor-pointer text-base font-semibold text-gray-900 dark:text-white">Puis-je exporter mes conversations ?</summary>
                         <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">Oui ! Chaque conversation peut être exportée en JSON en cliquant sur l'icône de téléchargement dans le header de la discussion.</p>
                     </details>
-                    <details class="group rounded-2xl border-2 border-gray-200 bg-white/80 p-6 shadow-md transition dark:bg-gray-800/80 dark:border-gray-700">
+                    <details class="group rounded-2xl border-2 border-blue-200 bg-blue-50/80 p-6 shadow-md transition dark:bg-gray-800/80 dark:border-gray-700">
                         <summary class="cursor-pointer text-base font-semibold text-gray-900 dark:text-white">Les modeles utilises sont-ils transparents ?</summary>
                         <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">Oui, chaque conversation affiche clairement le modele active.</p>
                     </details>

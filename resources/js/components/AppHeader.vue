@@ -77,7 +77,7 @@ const mainNavItems: NavItem[] = [
 
 <template>
     <header role="banner">
-        <div class="border-b border-blue-200/60 bg-white/80 backdrop-blur-xl shadow-sm">
+        <div class="border-b border-blue-200/60 bg-blue-50/80 backdrop-blur-xl shadow-sm dark:border-blue-800/30 dark:bg-blue-950/80">
             <div class="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
                 <!-- Mobile Menu -->
                 <div class="lg:hidden">
@@ -98,7 +98,7 @@ const mainNavItems: NavItem[] = [
                             >
                             <SheetHeader class="flex justify-start text-left">
                                 <AppLogoIcon
-                                    class="size-6 fill-current text-black dark:text-white"
+                                    class="size-6 stroke-current text-black dark:text-white"
                                     aria-label="CVBuilder Pro"
                                 />
                             </SheetHeader>
@@ -133,7 +133,7 @@ const mainNavItems: NavItem[] = [
                     </Sheet>
                 </div>
 
-                <Link :href="dashboard()" class="flex items-center gap-x-2" aria-label="Retour au tableau de bord">
+                <Link :href="dashboard()" class="flex items-center gap-x-2">
                     <AppLogo />
                 </Link>
 
@@ -142,7 +142,6 @@ const mainNavItems: NavItem[] = [
                     <NavigationMenu class="ml-10 flex h-full items-stretch">
                         <NavigationMenuList
                             class="flex h-full items-stretch space-x-2"
-                            role="navigation"
                             aria-label="Navigation principale"
                         >
                             <NavigationMenuItem
@@ -198,7 +197,7 @@ const mainNavItems: NavItem[] = [
                                 variant="ghost"
                                 size="icon"
                                 class="relative size-10 w-auto rounded-full p-1 focus-within:ring-2 focus-within:ring-primary"
-                                :aria-label="`Menu utilisateur de ${auth.user.name}`"
+                                aria-label="Menu utilisateur"
                             >
                                 <Avatar
                                     class="size-8 overflow-hidden rounded-full"
@@ -210,6 +209,7 @@ const mainNavItems: NavItem[] = [
                                     />
                                     <AvatarFallback
                                         class="rounded-lg bg-neutral-200 font-semibold text-black dark:bg-neutral-700 dark:text-white"
+                                        aria-hidden="true"
                                     >
                                         {{ getInitials(auth.user?.name) }}
                                     </AvatarFallback>

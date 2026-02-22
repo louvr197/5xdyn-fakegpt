@@ -1,0 +1,212 @@
+@startuml CVBuilder Pro - Database Schema
+
+!define primary_key(x) <b><color:#b8861b><&key></color> x</b>
+!define foreign_key(x) <color:#aaaaaa><&key></color> x
+!define column(x) <color:#efefef><&media-record></color> x
+!define table(x) entity x << (T, #FFAAAA) >>
+
+skinparam linetype ortho
+skinparam roundcorner 20
+skinparam class {
+    BackgroundColor White
+    BorderColor #333333
+    ArrowColor #333333
+}
+
+' ===== TABLES PRINCIPALES =====
+
+entity "users" as users {
+  primary_key(id) : BIGINT
+  --
+  column(name) : VARCHAR(255)
+  column(email) : VARCHAR(255) UNIQUE
+  column(email_verified_at) : TIMESTAMP NULL
+  column(password) : VARCHAR(255)
+  column(two_factor_secret) : TEXT NULL
+  column(two_factor_recovery_codes) : TEXT NULL
+  column(two_factor_confirmed_at) : TIMESTAMP NULL
+  column(remember_token) : VARCHAR(100) NULL
+  column(last_model) : VARCHAR(255) NULL
+  column(custom_instructions_about) : TEXT NULL
+  column(custom_instructions_behavior) : TEXT NULL
+  column(custom_instructions_commands) : TEXT NULL
+  column(tone_style) : VARCHAR(255) NULL
+  column(conciseness) : VARCHAR(255) NULL
+  column(titles_lists) : VARCHAR(255) NULL
+  column(warmth) : VARCHAR(255) NULL
+  column(enthusiasm) : VARCHAR(255) NULL
+  column(formality) : VARCHAR(255) NULL
+  column(emojis) : VARCHAR(255) NULL
+  column(created_at) : TIMESTAMP
+  column(updated_at) : TIMESTAMP
+}
+
+entity "conversations" as conversations {
+  primary_key(id) : BIGINT
+  --
+  foreign_key(user_id) : BIGINT
+  foreign_key(instruction_preset_id) : BIGINT NULL
+  column(model) : VARCHAR(255)
+  column(title) : VARCHAR(255) NULL
+  column(custom_instructions_about) : TEXT NULL
+  column(custom_instructions_behavior) : TEXT NULL
+  column(custom_instructions_commands) : TEXT NULL
+  column(created_at) : TIMESTAMP
+  column(updated_at) : TIMESTAMP
+}
+
+entity "messages" as messages {
+  primary_key(id) : BIGINT
+  --
+  foreign_key(conversation_id) : BIGINT
+  foreign_key(parent_message_id) : BIGINT NULL
+  column(role) : ENUM('user','assistant','system')
+  column(content) : TEXT
+  column(created_at) : TIMESTAMP
+  column(updated_at) : TIMESTAMP
+}
+
+entity "instruction_presets" as presets {
+  primary_key(id) : BIGINT
+  --
+  foreign_key(user_id) : BIGINT NULL
+  column(name) : VARCHAR(255)
+  column(description) : TEXT NULL
+  column(icon) : VARCHAR(255)
+  column(about) : TEXT NULL
+  column(behavior) : TEXT NULL
+  column(commands) : TEXT NULL
+  column(preferred_model) : VARCHAR(255) NULL
+  column(is_system) : BOOLEAN DEFAULT false
+  column(created_at) : TIMESTAMP
+  column(updated_at) : TIMESTAMP
+}
+
+entity "failed_models" as failed {
+  primary_key(id) : BIGINT
+  --
+  column(model_id) : VARCHAR(255) UNIQUE
+  column(last_error) : TEXT NULL
+  column(last_failed_at) : TIMESTAMP
+  column(failure_count) : INT DEFAULT 1
+  column(created_at) : TIMESTAMP
+  column(updated_at) : TIMESTAMP
+}
+
+' ===== TABLES SYSTÈME LARAVEL =====
+
+entity "password_reset_tokens" as pwd_reset {
+  primary_key(email) : VARCHAR(255)
+  --
+  column(token) : VARCHAR(255)
+  column(created_at) : TIMESTAMP NULL
+}
+
+entity "sessions" as sessions {
+  primary_key(id) : VARCHAR(255)
+  --
+  foreign_key(user_id) : BIGINT NULL (INDEX)
+  column(ip_address) : VARCHAR(45) NULL
+  column(user_agent) : TEXT NULL
+  column(payload) : LONGTEXT
+  column(last_activity) : INT (INDEX)
+}
+
+entity "cache" as cache {
+  primary_key(key) : VARCHAR(255)
+  --
+  column(value) : MEDIUMTEXT
+  column(expiration) : INT
+}
+
+entity "cache_locks" as cache_locks {
+  primary_key(key) : VARCHAR(255)
+  --
+  column(owner) : VARCHAR(255)
+  column(expiration) : INT
+}
+
+entity "jobs" as jobs {
+  primary_key(id) : BIGINT
+  --
+  column(queue) : VARCHAR(255) (INDEX)
+  column(payload) : LONGTEXT
+  column(attempts) : TINYINT
+  column(reserved_at) : INT NULL
+  column(available_at) : INT
+  column(created_at) : INT
+}
+
+entity "job_batches" as job_batches {
+  primary_key(id) : VARCHAR(255)
+  --
+  column(name) : VARCHAR(255)
+  column(total_jobs) : INT
+  column(pending_jobs) : INT
+  column(failed_jobs) : INT
+  column(failed_job_ids) : LONGTEXT
+  column(options) : MEDIUMTEXT NULL
+  column(cancelled_at) : INT NULL
+  column(created_at) : INT
+  column(finished_at) : INT NULL
+}
+
+entity "failed_jobs" as failed_jobs {
+  primary_key(id) : BIGINT
+  --
+  column(uuid) : VARCHAR(255) UNIQUE
+  column(connection) : TEXT
+  column(queue) : TEXT
+  column(payload) : LONGTEXT
+  column(exception) : LONGTEXT
+  column(failed_at) : TIMESTAMP
+}
+
+' ===== RELATIONS =====
+
+' User -> Conversations (1-N avec CASCADE)
+users ||--o{ conversations : "possède"
+note on link: FK: user_id\nON DELETE CASCADE
+
+' User -> InstructionPresets (1-N avec CASCADE, nullable)
+users ||--o{ presets : "crée"
+note on link: FK: user_id (NULL)\nON DELETE CASCADE
+
+' Conversation -> Messages (1-N avec CASCADE)
+conversations ||--o{ messages : "contient"
+note on link: FK: conversation_id\nON DELETE CASCADE
+
+' Conversation -> InstructionPreset (N-1 nullable avec NULL ON DELETE)
+conversations }o--|| presets : "utilise"
+note on link: FK: instruction_preset_id\nON DELETE SET NULL
+
+' Message -> Message (self-reference pour threads)
+messages }o--|| messages : "répond à"
+note on link: FK: parent_message_id\nON DELETE CASCADE (self)
+
+' Session -> User (N-1 optionnel)
+sessions }o--|| users : "appartient à"
+
+' ===== LÉGENDE =====
+
+legend right
+  |= Symbole |= Signification |
+  | <&key> | Clé primaire (PK) |
+  | <&key> (gris) | Clé étrangère (FK) |
+  | <&media-record> | Colonne standard |
+  | ||--o{ | Relation 1-N |
+  | }o--|| | Relation N-1 |
+  
+  **Contraintes d'intégrité:**
+  • CASCADE: Suppression en cascade
+  • SET NULL: FK devient NULL si référence supprimée
+  • UNIQUE: Valeur unique dans la colonne
+  
+  **Tables métier:** users, conversations, messages,
+  instruction_presets, failed_models
+  
+  **Tables système Laravel:** sessions, cache, jobs,
+  password_reset_tokens, failed_jobs, job_batches
+endlegend
+
+@enduml
