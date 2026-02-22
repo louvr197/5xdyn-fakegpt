@@ -1,0 +1,11 @@
+[build]
+nixpacks.pkgs = []
+nixpacks.aptPkgs = []
+nixpacks.buildPkgs = []
+
+[deploy]
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 5
+
+[env]
+PHP_VERSION = "8.4"
